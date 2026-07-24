@@ -4,9 +4,10 @@ import BackToTop from '../components/layout/BackToTop';
 import FloatingButtons from '../components/layout/FloatingButtons';
 import Footer from '../components/layout/Footer';
 import Navbar from '../components/layout/Navbar';
+import BookingModal from '../components/Booking/BookingModal';
 
 /**
- * Root layout wrapping all pages with persistent UI: Navbar, Footer, floating buttons.
+ * Root layout — nav, footer, floating buttons, and the global booking modal.
  */
 export default function MainLayout() {
   return (
@@ -19,6 +20,7 @@ export default function MainLayout() {
       <Footer />
       <BackToTop />
       <FloatingButtons />
+      <BookingModal />
     </>
   );
 }

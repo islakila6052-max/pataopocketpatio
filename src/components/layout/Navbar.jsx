@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Leaf } from 'lucide-react';
 import { NAV_LINKS, SITE_SHORT } from '../../constants/navigation';
+import { useBooking } from '../../context/BookingContext';
 import Button from '../ui/Button';
 import { cn } from '../../utils/helpers';
 
@@ -11,6 +12,7 @@ import { cn } from '../../utils/helpers';
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { open: openBooking } = useBooking();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -123,9 +125,9 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <a href="#visit" onClick={(e) => handleNavClick(e, '#visit')}>
-              <Button size="sm">Book a Visit</Button>
-            </a>
+            <Button size="sm" onClick={() => { setMobileOpen(false); openBooking(); }}>
+              Book a Visit
+            </Button>
           </li>
         </ul>
       </div>

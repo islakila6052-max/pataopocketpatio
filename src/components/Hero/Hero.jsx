@@ -1,4 +1,5 @@
 import { ChevronDown, Leaf } from 'lucide-react';
+import { useBooking } from '../../context/BookingContext';
 import Button from '../ui/Button';
 import { cn } from '../../utils/helpers';
 
@@ -17,6 +18,8 @@ const LEAVES = [
  * Full-viewport hero section with Lucide Leaf floating animations.
  */
 export default function Hero() {
+  const { open: openBooking } = useBooking();
+
   const handleScroll = (e, href) => {
     e.preventDefault();
     const target = document.querySelector(href);
@@ -77,7 +80,7 @@ export default function Hero() {
           <a href="#gallery" onClick={(e) => handleScroll(e, '#gallery')}>
             <Button className="max-sm:w-full">Explore the Garden</Button>
           </a>
-          <a href="#contact" onClick={(e) => handleScroll(e, '#contact')}>
+          <a href="#contact" onClick={(e) => { e.preventDefault(); openBooking(); }}>
             <Button variant="outline-light" className="max-sm:w-full">
               Book Your Visit
             </Button>
