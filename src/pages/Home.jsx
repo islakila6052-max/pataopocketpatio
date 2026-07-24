@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import SEO from '../components/SEO';
 import Hero from '../components/Hero/Hero';
 import About from '../components/About/About';
 import Experiences from '../components/Experiences/Experiences';
@@ -10,18 +10,12 @@ import FAQ from '../components/FAQ/FAQ';
 import Contact from '../components/Contact/Contact';
 
 /**
- * Main landing page composing all sections.
+ * Main landing page composing all sections with full SEO.
  */
 export default function Home() {
   return (
     <>
-      <Helmet>
-        <title>Patao Pocket Patio & Plant Sanctuary</title>
-        <meta
-          name="description"
-          content="A peaceful eco-friendly nature destination with botanical gardens, resort pools, and unforgettable moments."
-        />
-      </Helmet>
+      <SEO />
 
       <Hero />
       <About />
