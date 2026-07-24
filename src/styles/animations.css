@@ -1,0 +1,189 @@
+/* ----- SCROLL REVEAL ANIMATIONS ----- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: 0.8s ease;
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: 0.8s ease;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ----- FLOATING LEAVES ----- */
+@keyframes floatLeaf {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.8);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-120vh) rotate(720deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.leaf-animation {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.25;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ----- BOUNCE ----- */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(12px);
+  }
+}
+
+.bounce-animation {
+  animation: bounce 2s infinite;
+}
+
+/* ----- FAQ TRANSITION ----- */
+.faq-answer-enter {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding-top 0.4s ease;
+}
+
+.faq-answer-open {
+  max-height: 200px;
+  padding-top: 12px;
+}
+
+/* ----- LIGHTBOX ----- */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.lightbox-overlay img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 32px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+}
+
+/* ----- PROGRESS BAR ----- */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2E7D32, #66BB6A);
+  z-index: 9999;
+  width: 0%;
+  transition: width 0.1s;
+}
+
+/* ----- BACK TO TOP ----- */
+.back-top-btn {
+  position: fixed;
+  bottom: 90px;
+  right: 30px;
+  background: #2E7D32;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 500;
+  border: none;
+}
+
+.back-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ----- FLOATING BUTTONS ----- */
+.float-btn {
+  position: fixed;
+  right: 30px;
+  width: 56px;
+  height: 56px;
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  z-index: 600;
+  transition: transform 0.2s ease;
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.3);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.float-btn:hover {
+  transform: scale(1.08);
+}
+
+.float-wa {
+  bottom: 30px;
+  background: #25D366;
+  color: #fff;
+}
+
+.float-messenger {
+  bottom: 100px;
+  background: #0084ff;
+  box-shadow: 0 8px 28px rgba(0, 132, 255, 0.3);
+  color: #fff;
+}
+
+/* ----- SCROLLBAR HIDE FOR TESTIMONIAL SLIDER ----- */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
