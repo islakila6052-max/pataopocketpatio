@@ -57,7 +57,7 @@ export default function BookingModal() {
       onClick={(e) => { if (e.target === e.currentTarget) close(); }}
     >
       <div
-        className="bg-white rounded-4xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl animate-[slideUp_0.3s_ease-out]"
+        className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl animate-[slideUp_0.3s_ease-out]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

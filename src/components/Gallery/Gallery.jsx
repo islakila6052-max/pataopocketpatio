@@ -47,7 +47,7 @@ export default function Gallery() {
         {filteredImages.map((image) => (
           <div
             key={image.id}
-            className="break-inside-avoid rounded-3xl overflow-hidden cursor-pointer group relative"
+            className="break-inside-avoid rounded-2xl overflow-hidden cursor-pointer group relative"
             onClick={() => openLightbox(image.src)}
           >
             <img
@@ -82,7 +82,7 @@ export default function Gallery() {
             <img
               src={lightboxImage}
               alt="Gallery preview"
-              className="max-w-[90%] max-h-[90%] rounded-4xl shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
+              className="max-w-[90%] max-h-[90%] rounded-2xl shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
               onClick={(e) => e.stopPropagation()}
             />
           )}

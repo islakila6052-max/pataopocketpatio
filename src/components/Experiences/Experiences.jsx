@@ -28,7 +28,7 @@ export default function Experiences() {
             <motion.div
               key={exp.id}
               variants={fadeInUp}
-              className="bg-white rounded-4xl overflow-hidden shadow-exp border border-primary-100/20 transition-all duration-300 hover:-translate-y-3 hover:shadow-exp-hover group"
+              className="bg-white rounded-2xl overflow-hidden shadow-exp border border-primary-100/20 transition-all duration-300 hover:-translate-y-3 hover:shadow-exp-hover group"
             >
               <div className="relative overflow-hidden h-44 sm:h-48">
                 <img

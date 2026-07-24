@@ -23,7 +23,7 @@ export default function About() {
             src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80"
             alt="Tropical botanical garden at Patao Pocket Sanctuary"
             loading="lazy"
-            className="rounded-5xl shadow-[0_30px_60px_rgba(27,94,32,0.15)] h-[300px] sm:h-[400px] lg:h-[480px] w-full object-cover"
+            className="rounded-2xl shadow-[0_30px_60px_rgba(27,94,32,0.15)] h-[300px] sm:h-[400px] lg:h-[480px] w-full object-cover"
           />
         </div>
 
@@ -40,7 +40,7 @@ export default function About() {
             {FEATURES.map((feature) => (
               <div
                 key={feature.id}
-                className="bg-white p-6 rounded-4xl shadow-card border border-primary-100/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover group"
+                className="bg-white p-6 rounded-xl shadow-card border border-primary-100/40 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover group"
               >
                 <div className="w-11 h-11 rounded-2xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-colors">
                   <feature.icon

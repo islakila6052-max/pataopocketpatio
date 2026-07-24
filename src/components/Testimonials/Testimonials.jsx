@@ -103,7 +103,7 @@ export default function Testimonials() {
           {TESTIMONIALS.map((item) => (
             <div
               key={item.id}
-              className="w-[82vw] max-w-[380px] sm:w-auto sm:min-w-[340px] flex-shrink-0 snap-center bg-white/50 backdrop-blur-xl rounded-3xl sm:rounded-5xl p-5 sm:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-white/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_30px_50px_rgba(27,94,32,0.08)]"
+              className="w-[82vw] max-w-[380px] sm:w-auto sm:min-w-[340px] flex-shrink-0 snap-center bg-white/50 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-white/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_30px_50px_rgba(27,94,32,0.08)]"
             >
               {/* Stars */}
               <div className="flex gap-1 mb-4">

@@ -105,7 +105,7 @@ export default function Navbar() {
             'flex gap-8 items-center list-none font-medium',
             'max-md:hidden',
             mobileOpen &&
-              '!flex flex-col w-full bg-white/92 backdrop-blur-xl p-5 rounded-4xl mt-4 md:hidden'
+              '!flex flex-col w-full bg-white/92 backdrop-blur-xl p-5 rounded-2xl mt-4 md:hidden'
           )}
         >
           {NAV_LINKS.map((link) => (
