@@ -23,3 +23,9 @@ npm-debug.log*
 
 # Vite
 .vite/
+
+# Supabase CLI cache
+supabase/.temp/
+
+# Windows null device file
+nul
