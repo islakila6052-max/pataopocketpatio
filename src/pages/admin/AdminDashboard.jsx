@@ -16,6 +16,8 @@ import {
   CalendarDays,
   MessageCircle,
   Inbox,
+  Copy,
+  Check,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
@@ -45,6 +47,13 @@ export default function AdminDashboard({ onLogout }) {
   const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
+  const [copied, setCopied] = useState(null);
+
+  const copyEmail = (email) => {
+    navigator.clipboard.writeText(email);
+    setCopied(email);
+    setTimeout(() => setCopied(null), 2000);
+  };
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -137,7 +146,10 @@ export default function AdminDashboard({ onLogout }) {
                           <div className="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center flex-shrink-0"><User size={18} className="text-primary-600" strokeWidth={1.8} /></div>
                           <div className="min-w-0 flex-1">
                             <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{b.full_name}</h3>
-                            <p className="text-xs text-gray-500 mt-0.5 truncate">{b.email}</p>
+                            <button onClick={() => copyEmail(b.email)} className="text-xs text-gray-500 mt-0.5 flex items-center gap-1 hover:text-primary-600 transition-colors cursor-pointer bg-transparent border-none">
+                              {b.email}
+                              {copied === b.email ? <Check size={12} className="text-emerald-500" /> : <Copy size={11} className="opacity-40" />}
+                            </button>
                             {b.phone && <p className="text-xs text-gray-400 mt-0.5 flex items-center gap-1"><Phone size={10} />{b.phone}</p>}
                           </div>
                         </div>
@@ -183,7 +195,10 @@ export default function AdminDashboard({ onLogout }) {
                             <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{m.name}</h3>
                             <span className="text-xs text-gray-400 flex-shrink-0 ml-2">{formatShort(m.created_at)}</span>
                           </div>
-                          <p className="text-xs text-gray-500 truncate">{m.email}</p>
+                          <button onClick={() => copyEmail(m.email)} className="text-xs text-gray-500 flex items-center gap-1 hover:text-primary-600 transition-colors cursor-pointer bg-transparent border-none">
+                            {m.email}
+                            {copied === m.email ? <Check size={12} className="text-emerald-500" /> : <Copy size={11} className="opacity-40" />}
+                          </button>
                         </div>
                       </div>
                       <p className="text-sm text-gray-700 bg-gray-50 rounded-xl p-3 leading-relaxed">
