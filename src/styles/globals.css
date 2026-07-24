@@ -35,7 +35,7 @@
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-6;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 overflow-hidden;
   }
 
   .section-padding {
