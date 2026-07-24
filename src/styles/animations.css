@@ -142,42 +142,6 @@
   pointer-events: auto;
 }
 
-/* ----- FLOATING BUTTONS ----- */
-.float-btn {
-  position: fixed;
-  right: 30px;
-  width: 56px;
-  height: 56px;
-  border-radius: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  z-index: 600;
-  transition: transform 0.2s ease;
-  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.3);
-  cursor: pointer;
-  border: none;
-  text-decoration: none;
-}
-
-.float-btn:hover {
-  transform: scale(1.08);
-}
-
-.float-wa {
-  bottom: 30px;
-  background: #25D366;
-  color: #fff;
-}
-
-.float-messenger {
-  bottom: 100px;
-  background: #0084ff;
-  box-shadow: 0 8px 28px rgba(0, 132, 255, 0.3);
-  color: #fff;
-}
-
 /* ----- SCROLLBAR HIDE FOR TESTIMONIAL SLIDER ----- */
 .hide-scrollbar {
   -ms-overflow-style: none;
