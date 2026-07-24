@@ -1,7 +1,9 @@
-import { Leaf } from 'lucide-react';
+import { useState } from 'react';
+import { Leaf, Loader2 } from 'lucide-react';
 import { SITE_SHORT, PHONE, EMAIL } from '../../constants/navigation';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+import { subscribeToNewsletter } from '../../services/api';
 
 const footerLinks = {
   quick: [
@@ -19,13 +21,41 @@ const footerLinks = {
 };
 
 /**
- * Site footer — uses Lucide Leaf icon, no emojis.
+ * Site footer with Supabase-powered newsletter signup.
  */
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
+
   const handleScroll = (e, href) => {
     e.preventDefault();
     const target = document.querySelector(href);
     if (target) target.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setStatus('loading');
+    setMessage('');
+
+    const { error } = await subscribeToNewsletter(email);
+
+    if (error) {
+      if (error.code === '23505') {
+        setMessage('You are already subscribed! 🌿');
+      } else {
+        setMessage('Something went wrong. Try again.');
+      }
+      setStatus('error');
+      return;
+    }
+
+    setStatus('success');
+    setMessage('Welcome to the sanctuary! 🌿');
+    setEmail('');
   };
 
   return (
@@ -87,21 +117,38 @@ export default function Footer() {
             <p className="text-primary-200/70 text-sm mb-4">
               Stay updated with our latest events and offers.
             </p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-              className="flex flex-col gap-3"
-            >
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-3">
               <Input
                 type="email"
                 placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="!rounded-full !border-none !bg-primary-800 !text-white placeholder:!text-primary-300"
+                required
               />
-              <Button type="submit" size="sm" className="w-full">
-                Subscribe
+              <Button
+                type="submit"
+                size="sm"
+                disabled={status === 'loading'}
+                className="w-full inline-flex items-center justify-center gap-2"
+              >
+                {status === 'loading' && (
+                  <Loader2 size={16} className="animate-spin" />
+                )}
+                {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
               </Button>
             </form>
+            {message && (
+              <p
+                className={`text-xs mt-3 animate-[fadeIn_0.3s_ease-out] ${
+                  status === 'success'
+                    ? 'text-primary-300'
+                    : 'text-red-300'
+                }`}
+              >
+                {message}
+              </p>
+            )}
           </div>
         </div>
 
