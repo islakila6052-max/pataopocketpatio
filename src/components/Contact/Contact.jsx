@@ -70,13 +70,28 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Map Placeholder */}
-          <div className="mt-8 bg-primary-200/60 rounded-4xl h-52 flex items-center justify-center text-primary-800 font-medium border border-primary-200">
-            <div className="text-center">
-              <MapPin size={32} className="mx-auto mb-2 text-primary-600" strokeWidth={1.5} />
-              <span className="text-sm">Google Maps — Find us here</span>
-            </div>
+          {/* Google Maps Embed */}
+          <div className="mt-8 rounded-4xl overflow-hidden border border-primary-200 shadow-card h-64 sm:h-72">
+            <iframe
+              title="Patao Pocket Location"
+              src="https://www.google.com/maps?q=11.223741647405047,123.69582244191017&z=16&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
+          <a
+            href="https://www.google.com/maps/dir/?api=1&destination=11.223741647405047,123.69582244191017"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-3 text-sm font-medium text-primary-700 hover:text-primary-900 transition-colors"
+          >
+            <MapPin size={16} strokeWidth={1.8} />
+            Get Directions on Google Maps
+          </a>
         </div>
 
         {/* Contact Form */}
