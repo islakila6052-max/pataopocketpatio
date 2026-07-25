@@ -91,13 +91,13 @@ export default function Gallery() {
 
       {/* Filters + Counter */}
       <div className="flex flex-col items-center gap-3 mb-8">
-        <div className="flex flex-wrap gap-1.5 justify-center bg-gray-100/60 p-1 rounded-xl">
+        <div className="flex flex-wrap gap-1 justify-center bg-gray-100/60 p-1 rounded-xl max-w-full">
           {GALLERY_FILTERS.map((filter) => (
             <button
               key={filter.value}
               onClick={() => setActiveFilter(filter.value)}
               className={cn(
-                'px-3.5 py-2 rounded-lg text-[12px] sm:text-[13px] font-medium transition-all duration-300 ease-apple',
+                'px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-[13px] font-medium transition-all duration-300 ease-apple whitespace-nowrap',
                 activeFilter === filter.value
                   ? 'bg-white text-primary-900 shadow-sm'
                   : 'text-neutral-500 hover:text-neutral-700 hover:bg-white/50'
@@ -136,39 +136,39 @@ export default function Gallery() {
                 <LazyImage src={image.src} alt={image.name} />
 
                 {/* Badges */}
-                <div className="absolute top-2 left-2 flex gap-1.5 flex-wrap">
-                  <span className={cn('px-1.5 py-0.5 rounded-md text-[10px] font-medium border backdrop-blur-sm', careColors[image.care] || careColors['Moderate'])}>
+                <div className="absolute top-1.5 left-1.5 flex gap-1 flex-wrap max-w-[65%]">
+                  <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', careColors[image.care] || careColors['Moderate'])}>
                     {image.care}
                   </span>
-                  <span className={cn('px-1.5 py-0.5 rounded-md text-[10px] font-medium border backdrop-blur-sm', lightColors[image.light] || lightColors['Indirect Light'])}>
+                  <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none hidden xs:inline', lightColors[image.light] || lightColors['Indirect Light'])}>
                     {image.light}
                   </span>
                 </div>
                 {image.petSafe && (
-                  <div className="absolute top-2 right-2">
-                    <span className="px-1.5 py-0.5 rounded-md bg-green-100/90 text-green-700 text-[10px] font-medium border border-green-200 backdrop-blur-sm">
-                      🐾 Safe
+                  <div className="absolute bottom-1.5 left-1.5">
+                    <span className="px-1 py-0.5 rounded bg-green-100/90 text-green-700 text-[9px] sm:text-[10px] font-medium border border-green-200 backdrop-blur-sm leading-none">
+                      <span className="hidden xs:inline">🐾 </span>Safe
                     </span>
                   </div>
                 )}
               </div>
 
               {/* Card Info */}
-              <div className="p-3 sm:p-3.5">
-                <h3 className="text-sm font-semibold text-neutral-900 tracking-tight leading-tight truncate">
+              <div className="p-2.5 sm:p-3.5">
+                <h3 className="text-[13px] sm:text-sm font-semibold text-neutral-900 tracking-tight leading-tight truncate">
                   {image.name}
                 </h3>
-                <p className="text-[11px] text-neutral-400 italic mt-0.5 truncate">
+                <p className="text-[10px] sm:text-[11px] text-neutral-400 italic mt-0.5 truncate">
                   {image.scientific}
                 </p>
-                <div className="flex items-center justify-between mt-2.5">
-                  <span className="text-sm font-bold text-primary-700">{image.price}</span>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-[13px] sm:text-sm font-bold text-primary-700">{image.price}</span>
                   <button
                     onClick={(e) => handleInquire(e, image)}
-                    className="inline-flex items-center gap-1 text-[11px] font-medium text-white bg-primary-700 hover:bg-primary-800 px-3 py-1.5 rounded-lg transition-all duration-200 ease-apple active:scale-95 cursor-pointer border-none"
+                    className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium text-white bg-primary-700 hover:bg-primary-800 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 ease-apple active:scale-95 cursor-pointer border-none"
                   >
-                    <ShoppingBag size={12} strokeWidth={2} />
-                    Inquire
+                    <ShoppingBag size={11} strokeWidth={2} />
+                    <span className="hidden xs:inline">Inquire</span>
                   </button>
                 </div>
               </div>
