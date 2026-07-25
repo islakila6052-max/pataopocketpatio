@@ -14,8 +14,8 @@ export default function Home() {
     <>
       <SEO />
       <Hero />
-      <GalleryPreview />
       <About />
+      <GalleryPreview />
       <Experiences />
       <Resort />
       <Statistics />
