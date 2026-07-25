@@ -20,7 +20,7 @@ export default function GalleryPreview() {
       </SectionTitle>
 
       {/* Preview Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8 content-auto">
         {previewPlants.map((plant) => (
           <Link to="/gallery" key={plant.id}
             className="group bg-white rounded-xl border border-neutral-100 overflow-hidden transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-lg hover:shadow-neutral-200/50">

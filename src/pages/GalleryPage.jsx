@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { X, Image, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_IMAGES, GALLERY_FILTERS } from '../constants/gallery';
@@ -55,8 +55,11 @@ export default function GalleryPage() {
   const [lightbox, setLightbox] = useState(null);
   const [toast, setToast] = useState(null);
 
-  const filtered = (activeFilter === 'all' ? GALLERY_IMAGES : GALLERY_IMAGES.filter(img => img.category === activeFilter))
-    .filter(p => search === '' || p.name.toLowerCase().includes(search.toLowerCase()));
+  const filtered = useMemo(() =>
+    (activeFilter === 'all' ? GALLERY_IMAGES : GALLERY_IMAGES.filter(img => img.category === activeFilter))
+      .filter(p => search === '' || p.name.toLowerCase().includes(search.toLowerCase())),
+    [activeFilter, search]
+  );
 
   const openLightbox = useCallback((plant) => setLightbox({ plant, index: 0 }), []);
   const closeLightbox = useCallback(() => setLightbox(null), []);
@@ -101,7 +104,7 @@ export default function GalleryPage() {
       </div>
 
       {/* Grid */}
-      <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+      <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 content-auto">
         <AnimatePresence mode="popLayout">
           {filtered.map((plant, i) => (
             <motion.div key={plant.id} layout variants={cardVariants} initial="hidden" animate="visible" exit="exit" custom={i}
