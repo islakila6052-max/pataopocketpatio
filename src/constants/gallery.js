@@ -1,18 +1,18 @@
 export const GALLERY_IMAGES = [
   // INDOOR
   { id: 1, src: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80', name: 'Snake Plant', scientific: 'Sansevieria trifasciata', price: '₱350', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
-  { id: 2, src: 'https://images.unsplash.com/photo-1487700160041-babef50c1cb1?w=400&q=80', name: 'ZZ Plant', scientific: 'Zamioculcas zamiifolia', price: '₱480', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
-  { id: 3, src: 'https://images.unsplash.com/photo-1593482892290-f542273b9227?w=400&q=80', name: 'Peace Lily', scientific: 'Spathiphyllum wallisii', price: '₱550', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
-  { id: 4, src: 'https://images.unsplash.com/photo-1597305877032-61b5e37a4bfe?w=400&q=80', name: 'Golden Pothos', scientific: 'Epipremnum aureum', price: '₱280', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
-  { id: 5, src: 'https://images.unsplash.com/photo-1617093727343-374698b0248d?w=400&q=80', name: 'Chinese Evergreen', scientific: 'Aglaonema commutatum', price: '₱380', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
+  { id: 2, src: 'https://images.unsplash.com/photo-1604061986761-d9d0cc6899ca?w=400&q=80', name: 'ZZ Plant', scientific: 'Zamioculcas zamiifolia', price: '₱480', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
+  { id: 3, src: 'https://images.unsplash.com/photo-1614594975525-e4518f81f771?w=400&q=80', name: 'Peace Lily', scientific: 'Spathiphyllum wallisii', price: '₱550', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
+  { id: 4, src: 'https://images.unsplash.com/photo-1622396481328-9b1b78cdd9fd?w=400&q=80', name: 'Golden Pothos', scientific: 'Epipremnum aureum', price: '₱280', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
+  { id: 5, src: 'https://images.unsplash.com/photo-1592150621744-aca64f7ef8f8?w=400&q=80', name: 'Chinese Evergreen', scientific: 'Aglaonema commutatum', price: '₱380', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
   { id: 6, src: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&q=80', name: 'Nerve Plant', scientific: 'Fittonia albivenis', price: '₱180', care: 'Easy', light: 'Indirect Light', category: 'indoor', petSafe: true },
   { id: 7, src: 'https://images.unsplash.com/photo-1567449303078-57ad995bd17a?w=400&q=80', name: 'African Violet', scientific: 'Saintpaulia ionantha', price: '₱240', care: 'Moderate', light: 'Indirect Light', category: 'indoor', petSafe: true },
-  { id: 8, src: 'https://images.unsplash.com/photo-1599661046827-dacff0bc0f09?w=400&q=80', name: 'Hoya Carnosa', scientific: 'Hoya carnosa', price: '₱370', care: 'Easy', light: 'Bright Light', category: 'indoor', petSafe: true },
+  { id: 8, src: 'https://images.unsplash.com/photo-1593691509543-c55fb32e7363?w=400&q=80', name: 'Hoya Carnosa', scientific: 'Hoya carnosa', price: '₱370', care: 'Easy', light: 'Bright Light', category: 'indoor', petSafe: true },
 
   // MARCOTTED TREES
-  { id: 9, src: 'https://images.unsplash.com/photo-1587498359975-a23e12b2a71e?w=400&q=80', name: 'Marcotted Calamansi', scientific: 'Citrus microcarpa (marcot)', price: '₱450', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
+  { id: 9, src: 'https://images.unsplash.com/photo-1598760121023-51a99f8f5f1e?w=400&q=80', name: 'Marcotted Calamansi', scientific: 'Citrus microcarpa (marcot)', price: '₱450', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
   { id: 10, src: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80', name: 'Marcotted Mango', scientific: 'Mangifera indica (marcot)', price: '₱680', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
-  { id: 11, src: 'https://images.unsplash.com/photo-1587732608058-5ccfedd3c8bf?w=400&q=80', name: 'Marcotted Lemon', scientific: 'Citrus limon (marcot)', price: '₱520', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
+  { id: 11, src: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&q=80', name: 'Marcotted Lemon', scientific: 'Citrus limon (marcot)', price: '₱520', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
   { id: 12, src: 'https://images.unsplash.com/photo-1591073113125-e46713c829ed?w=400&q=80', name: 'Marcotted Guyabano', scientific: 'Annona muricata (marcot)', price: '₱550', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
   { id: 13, src: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&q=80', name: 'Marcotted Avocado', scientific: 'Persea americana (marcot)', price: '₱750', care: 'Moderate', light: 'Bright Light', category: 'marcotted', petSafe: false },
   { id: 14, src: 'https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=400&q=80', name: 'Marcotted Chico', scientific: 'Manilkara zapota (marcot)', price: '₱480', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
