@@ -136,21 +136,21 @@ export default function Gallery() {
                 <LazyImage src={image.src} alt={image.name} />
 
                 {/* Badges */}
-                <div className="absolute top-1.5 left-1.5 flex gap-1 flex-wrap max-w-[65%]">
-                  <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', careColors[image.care] || careColors['Moderate'])}>
-                    {image.care}
-                  </span>
-                  <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none hidden xs:inline', lightColors[image.light] || lightColors['Indirect Light'])}>
-                    {image.light}
-                  </span>
-                </div>
-                {image.petSafe && (
-                  <div className="absolute bottom-1.5 left-1.5">
-                    <span className="px-1 py-0.5 rounded bg-green-100/90 text-green-700 text-[9px] sm:text-[10px] font-medium border border-green-200 backdrop-blur-sm leading-none">
-                      <span className="hidden xs:inline">🐾 </span>Safe
+                <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between gap-1">
+                  <div className="flex gap-1 flex-wrap">
+                    <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', careColors[image.care] || careColors['Moderate'])}>
+                      {image.care}
+                    </span>
+                    <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', lightColors[image.light] || lightColors['Indirect Light'])}>
+                      {image.light}
                     </span>
                   </div>
-                )}
+                  {image.petSafe && (
+                    <span className="px-1 py-0.5 rounded bg-green-100/90 text-green-700 text-[9px] sm:text-[10px] font-medium border border-green-200 backdrop-blur-sm leading-none flex-shrink-0">
+                      🐾
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Card Info */}
