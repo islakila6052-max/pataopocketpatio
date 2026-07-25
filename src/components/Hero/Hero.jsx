@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Sparkles } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useBooking } from '../../context/BookingContext';
 import Button from '../ui/Button';
 
@@ -135,12 +135,6 @@ export default function Hero() {
           variants={fadeUp}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/8 backdrop-blur-xl border border-white/10 text-white/90 text-xs sm:text-sm font-medium mb-8"
         >
-          <motion.span
-            className="w-1.5 h-1.5 rounded-full bg-green-400"
-            animate={{ opacity: [1, 0.4, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-          <Sparkles size={13} className="text-yellow-300/80" />
           <span>Nature Sanctuary &amp; Resort</span>
         </motion.div>
 

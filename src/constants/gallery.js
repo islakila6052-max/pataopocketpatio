@@ -17,7 +17,7 @@ export const GALLERY_IMAGES = [
   { id: 13, src: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&q=80', name: 'Marcotted Avocado', scientific: 'Persea americana (marcot)', price: '₱750', care: 'Moderate', light: 'Bright Light', category: 'marcotted', petSafe: false },
   { id: 14, src: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80', name: 'Marcotted Chico', scientific: 'Manilkara zapota (marcot)', price: '₱480', care: 'Easy', light: 'Bright Light', category: 'marcotted', petSafe: true },
   { id: 15, src: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400&q=80', name: 'Marcotted Rambutan', scientific: 'Nephelium lappaceum (marcot)', price: '₱600', care: 'Moderate', light: 'Bright Light', category: 'marcotted', petSafe: true },
-  { id: 16, src: 'https://images.unsplash.com/photo-1534575266201-387e8e1f5b9c?w=400&q=80', name: 'Marcotted Lanzones', scientific: 'Lansium domesticum (marcot)', price: '₱580', care: 'Moderate', light: 'Bright Light', category: 'marcotted', petSafe: true },
+  { id: 16, src: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80', name: 'Grafted Jackfruit', scientific: 'Artocarpus heterophyllus', price: '₱780', care: 'Easy', light: 'Bright Light', category: 'grafted', petSafe: true },
 
   // GRAFTED TREES
   { id: 17, src: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400&q=80', name: 'Grafted Mango', scientific: 'Mangifera indica (grafted)', price: '₱850', care: 'Easy', light: 'Bright Light', category: 'grafted', petSafe: true },
@@ -27,15 +27,15 @@ export const GALLERY_IMAGES = [
   { id: 21, src: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400&q=80', name: 'Grafted Pomelo', scientific: 'Citrus maxima (grafted)', price: '₱720', care: 'Easy', light: 'Bright Light', category: 'grafted', petSafe: true },
   { id: 22, src: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80', name: 'Grafted Atis', scientific: 'Annona squamosa (grafted)', price: '₱590', care: 'Easy', light: 'Bright Light', category: 'grafted', petSafe: true },
   { id: 23, src: 'https://images.unsplash.com/photo-1459156212016-c812468e2115?w=400&q=80', name: 'Grafted Caimito', scientific: 'Chrysophyllum cainito (grafted)', price: '₱680', care: 'Moderate', light: 'Bright Light', category: 'grafted', petSafe: true },
-  { id: 24, src: 'https://images.unsplash.com/photo-1534575266201-387e8e1f5b9c?w=400&q=80', name: 'Grafted Santol', scientific: 'Sandoricum koetjape (grafted)', price: '₱550', care: 'Easy', light: 'Bright Light', category: 'grafted', petSafe: true },
+  { id: 24, src: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400&q=80', name: 'Malunggay', scientific: 'Moringa oleifera', price: '₱120', care: 'Easy', light: 'Bright Light', category: 'outdoor', petSafe: true },
 
   // EASY CARE
   { id: 25, src: 'https://images.unsplash.com/photo-1459156212016-c812468e2115?w=400&q=80', name: 'Echeveria', scientific: 'Echeveria elegans', price: '₱150', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: true },
-  { id: 26, src: 'https://images.unsplash.com/photo-1520302630590-fd1c66edc19d?w=400&q=80', name: 'Aloe Vera', scientific: 'Aloe barbadensis', price: '₱180', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: false },
+  { id: 26  , src: 'https://images.unsplash.com/photo-1459156212016-c812468e2115?w=400&q=80', name: 'Bird of Paradise', scientific: 'Strelitzia reginae', price: '₱1,500', care: 'Moderate', light: 'Bright Light', category: 'outdoor', petSafe: false },
   { id: 27, src: 'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400&q=80', name: 'Barrel Cactus', scientific: 'Echinocactus grusonii', price: '₱220', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: true },
   { id: 28, src: 'https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?w=400&q=80', name: 'Jade Plant', scientific: 'Crassula ovata', price: '₱250', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: false },
   { id: 29, src: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80', name: 'String of Pearls', scientific: 'Senecio rowleyanus', price: '₱320', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: false },
-  { id: 30, src: 'https://images.unsplash.com/photo-1509423350716-9d93d7b91bdc?w=400&q=80', name: 'Burro\'s Tail', scientific: 'Sedum morganianum', price: '₱280', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: true },
+  { id: 230, src: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80', name: 'String of Pearls', scientific: 'Senecio rowleyanus', price: '₱320', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: false },
   { id: 31, src: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&q=80', name: 'Ponytail Palm', scientific: 'Beaucarnea recurvata', price: '₱580', care: 'Easy', light: 'Bright Light', category: 'easy', petSafe: true },
   { id: 32, src: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400&q=80', name: 'Cast Iron Plant', scientific: 'Aspidistra elatior', price: '₱520', care: 'Easy', light: 'Low Light', category: 'easy', petSafe: true },
 
@@ -50,8 +50,8 @@ export const GALLERY_IMAGES = [
   { id: 40, src: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80', name: 'Hibiscus', scientific: 'Hibiscus rosa-sinensis', price: '₱280', care: 'Easy', light: 'Bright Light', category: 'outdoor', petSafe: true },
 
   // MORE INDOOR
-  { id: 41, src: 'https://images.unsplash.com/photo-1534575266201-387e8e1f5b9c?w=400&q=80', name: 'Dracaena', scientific: 'Dracaena marginata', price: '₱650', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
-  { id: 42, src: 'https://images.unsplash.com/photo-1509423350716-9d93d7b91bdc?w=400&q=80', name: 'Philodendron', scientific: 'Philodendron hederaceum', price: '₱420', care: 'Easy', light: 'Low Light', category: 'indoor', petSafe: false },
+  { id: 41, src: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&q=80', name: 'Nerve Plant', scientific: 'Fittonia albivenis', price: '₱180', care: 'Easy', light: 'Indirect Light', category: 'indoor', petSafe: true },
+  { id: 42, src: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&q=80', name: 'Nerve Plant', scientific: 'Fittonia albivenis', price: '₱180', care: 'Easy', light: 'Indirect Light', category: 'indoor', petSafe: true },
   { id: 43, src: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400&q=80', name: 'Spider Plant', scientific: 'Chlorophytum comosum', price: '₱200', care: 'Easy', light: 'Indirect Light', category: 'indoor', petSafe: true },
   { id: 44, src: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?w=400&q=80', name: 'Polka Dot Plant', scientific: 'Hypoestes phyllostachya', price: '₱190', care: 'Easy', light: 'Indirect Light', category: 'indoor', petSafe: true },
 
