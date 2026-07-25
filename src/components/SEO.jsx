@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 const SITE_URL = 'https://pataopocketpatio.vercel.app';
 const OG_IMAGE =
-  'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1200&q=80';
+  'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1200&h=630&fit=crop&q=80';
 
 const structuredData = {
   '@context': 'https://schema.org',
