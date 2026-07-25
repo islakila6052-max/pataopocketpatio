@@ -1,8 +1,15 @@
 import { EXPERIENCES } from '../../constants/experiences';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import SectionTitle from '../ui/SectionTitle';
+import Marquee from '../ui/Marquee';
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerChildren } from '../../utils/animations';
+
+const tags = [
+  'Organic', 'Farm-to-Table', 'Tropical', 'Pet-Friendly', 'Eco-Tourism',
+  'Guided Tours', 'Fresh Juices', 'Sunset Views', 'Nature Walks', 'Infinity Pool',
+  'Weekend Getaway', 'Botanical', 'Outdoor Dining', 'Relaxation', 'Wellness',
+];
 
 export default function Experiences() {
   const [ref, visible] = useScrollAnimation({ threshold: 0.1 });
@@ -11,6 +18,8 @@ export default function Experiences() {
     <section id="experiences" className="bg-primary-50/70 section-padding">
       <div className="container" ref={ref}>
         <SectionTitle center>Featured Experiences</SectionTitle>
+
+        <Marquee items={tags} />
 
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-8"
