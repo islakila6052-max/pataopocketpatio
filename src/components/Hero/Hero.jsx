@@ -55,12 +55,6 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleGalleryScroll = (e) => {
-    e.preventDefault();
-    const target = document.querySelector('#gallery');
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section
       id="home"
@@ -157,21 +151,13 @@ export default function Hero() {
         {/* Buttons */}
         <motion.div
           variants={fadeUp}
-          className="flex gap-3 sm:gap-4 justify-center flex-wrap max-sm:flex-col max-sm:items-stretch max-sm:px-2"
+          className="flex justify-center max-sm:px-4"
         >
-          <a href="#gallery" onClick={handleGalleryScroll} className="max-sm:w-full">
-            <Button
-              size="lg"
-              className="!bg-white !text-primary-900 hover:!bg-green-50 !shadow-2xl !shadow-white/20 !px-8 !w-full sm:!w-auto"
-            >
-              Explore the Garden
-            </Button>
-          </a>
-          <button onClick={openBooking} className="max-sm:w-full">
+          <button onClick={openBooking} className="w-full sm:w-auto">
             <Button
               variant="outline-light"
               size="lg"
-              className="!border-white/40 !text-white hover:!bg-white/10 !backdrop-blur-sm !px-8 !w-full sm:!w-auto"
+              className="!border-white/40 !text-white hover:!bg-white/10 !backdrop-blur-sm !px-10 !w-full sm:!w-auto"
             >
               Book Your Visit
             </Button>
