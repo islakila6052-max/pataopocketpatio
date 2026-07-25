@@ -1,5 +1,6 @@
 import SEO from '../components/SEO';
 import Hero from '../components/Hero/Hero';
+import GalleryPreview from '../components/GalleryPreview';
 import About from '../components/About/About';
 import Experiences from '../components/Experiences/Experiences';
 import Resort from '../components/Resort/Resort';
@@ -13,6 +14,7 @@ export default function Home() {
     <>
       <SEO />
       <Hero />
+      <GalleryPreview />
       <About />
       <Experiences />
       <Resort />
