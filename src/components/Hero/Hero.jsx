@@ -180,8 +180,7 @@ export default function Hero() {
           variants={fadeUp}
           className="flex justify-center max-sm:px-4 mb-10 sm:mb-12"
         >
-          <motion.button
-            onClick={openBooking}
+          <motion.div
             className="w-full sm:w-auto"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -189,11 +188,12 @@ export default function Hero() {
             <Button
               variant="outline-light"
               size="lg"
+              onClick={openBooking}
               className="!border-white/30 !text-white hover:!bg-white/8 !backdrop-blur-sm !px-10 !w-full sm:!w-auto !rounded-lg"
             >
               Book Your Visit
             </Button>
-          </motion.button>
+          </motion.div>
         </motion.div>
 
         {/* Stats */}
