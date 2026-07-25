@@ -43,7 +43,7 @@ function LazyImage({ src, alt }) {
   }, [src]);
 
   return (
-    <div className="relative w-full h-full bg-neutral-100">
+    <div className="relative w-full h-full bg-primary-50/30">
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-8 h-8 rounded-full border-2 border-primary-200 border-t-primary-500 animate-spin" />
@@ -56,7 +56,7 @@ function LazyImage({ src, alt }) {
         loading="lazy"
         decoding="async"
         className={cn(
-          'w-full h-full object-cover transition-all duration-500 ease-apple',
+          'w-full h-full object-cover object-center transition-all duration-500 ease-apple',
           loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
         )}
       />
