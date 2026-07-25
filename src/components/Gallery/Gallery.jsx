@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { X, Image } from 'lucide-react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { X, Image, ShoppingBag, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_IMAGES, GALLERY_FILTERS } from '../../constants/gallery';
 import SectionTitle from '../ui/SectionTitle';
@@ -11,7 +11,7 @@ const cardVariants = {
   visible: (i) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.4, delay: i * 0.03, ease: [0.16, 1, 0.3, 1] },
   }),
   exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
 };
@@ -20,16 +20,54 @@ const careColors = {
   'Easy': 'bg-emerald-50 text-emerald-700 border-emerald-200',
   'Moderate': 'bg-amber-50 text-amber-700 border-amber-200',
 };
-
 const lightColors = {
   'Low Light': 'bg-slate-50 text-slate-600 border-slate-200',
   'Indirect Light': 'bg-sky-50 text-sky-600 border-sky-200',
   'Bright Light': 'bg-yellow-50 text-yellow-700 border-yellow-200',
 };
 
+function LazyImage({ src, alt }) {
+  const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef(null);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    if (img.complete) {
+      setLoaded(true);
+      return;
+    }
+    const onLoad = () => setLoaded(true);
+    img.addEventListener('load', onLoad);
+    return () => img.removeEventListener('load', onLoad);
+  }, [src]);
+
+  return (
+    <div className="relative w-full h-full bg-neutral-100">
+      {!loaded && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-2 border-primary-200 border-t-primary-500 animate-spin" />
+        </div>
+      )}
+      <img
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className={cn(
+          'w-full h-full object-cover transition-all duration-500 ease-apple',
+          loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        )}
+      />
+    </div>
+  );
+}
+
 export default function Gallery() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [lightboxImage, setLightboxImage] = useState(null);
+  const [toast, setToast] = useState(null);
 
   const filteredImages =
     activeFilter === 'all'
@@ -38,6 +76,14 @@ export default function Gallery() {
 
   const openLightbox = useCallback((src) => setLightboxImage(src), []);
   const closeLightbox = useCallback(() => setLightboxImage(null), []);
+
+  const handleInquire = (e, plant) => {
+    e.stopPropagation();
+    const msg = encodeURIComponent(`Hi! I'm interested in the ${plant.name} (${plant.price}). Is it still available?`);
+    window.open(`https://m.me/pataosanctuary?text=${msg}`, '_blank');
+    setToast(plant.name);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   return (
     <section id="gallery" className="container section-padding">
@@ -51,7 +97,7 @@ export default function Gallery() {
               key={filter.value}
               onClick={() => setActiveFilter(filter.value)}
               className={cn(
-                'px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-300 ease-apple',
+                'px-3.5 py-2 rounded-lg text-[12px] sm:text-[13px] font-medium transition-all duration-300 ease-apple',
                 activeFilter === filter.value
                   ? 'bg-white text-primary-900 shadow-sm'
                   : 'text-neutral-500 hover:text-neutral-700 hover:bg-white/50'
@@ -71,10 +117,7 @@ export default function Gallery() {
       </div>
 
       {/* Grid */}
-      <motion.div
-        layout
-        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5"
-      >
+      <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
         <AnimatePresence mode="popLayout">
           {filteredImages.map((image, i) => (
             <motion.div
@@ -89,28 +132,21 @@ export default function Gallery() {
               onClick={() => openLightbox(image.src)}
             >
               {/* Image Container */}
-              <div className="relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden bg-neutral-100">
-                <img
-                  src={image.src}
-                  alt={image.name}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-500 ease-apple group-hover:scale-105"
-                />
+              <div className="relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden">
+                <LazyImage src={image.src} alt={image.name} />
 
-                {/* Top Badges */}
+                {/* Badges */}
                 <div className="absolute top-2 left-2 flex gap-1.5 flex-wrap">
-                  <span className={cn('px-1.5 py-0.5 rounded-md text-[10px] font-medium border', careColors[image.care] || careColors['Moderate'])}>
+                  <span className={cn('px-1.5 py-0.5 rounded-md text-[10px] font-medium border backdrop-blur-sm', careColors[image.care] || careColors['Moderate'])}>
                     {image.care}
                   </span>
-                  <span className={cn('px-1.5 py-0.5 rounded-md text-[10px] font-medium border', lightColors[image.light] || lightColors['Indirect Light'])}>
+                  <span className={cn('px-1.5 py-0.5 rounded-md text-[10px] font-medium border backdrop-blur-sm', lightColors[image.light] || lightColors['Indirect Light'])}>
                     {image.light}
                   </span>
                 </div>
-
-                {/* Pet-safe badge */}
                 {image.petSafe && (
                   <div className="absolute top-2 right-2">
-                    <span className="px-1.5 py-0.5 rounded-md bg-green-100 text-green-700 text-[10px] font-medium border border-green-200">
+                    <span className="px-1.5 py-0.5 rounded-md bg-green-100/90 text-green-700 text-[10px] font-medium border border-green-200 backdrop-blur-sm">
                       🐾 Safe
                     </span>
                   </div>
@@ -119,21 +155,20 @@ export default function Gallery() {
 
               {/* Card Info */}
               <div className="p-3 sm:p-3.5">
-                <h3 className="text-sm font-semibold text-neutral-900 tracking-tight leading-tight">
+                <h3 className="text-sm font-semibold text-neutral-900 tracking-tight leading-tight truncate">
                   {image.name}
                 </h3>
                 <p className="text-[11px] text-neutral-400 italic mt-0.5 truncate">
                   {image.scientific}
                 </p>
                 <div className="flex items-center justify-between mt-2.5">
-                  <span className="text-sm font-bold text-primary-700">
-                    {image.price}
-                  </span>
+                  <span className="text-sm font-bold text-primary-700">{image.price}</span>
                   <button
-                    onClick={(e) => { e.stopPropagation(); openLightbox(image.src); }}
-                    className="text-[11px] font-medium text-primary-600 hover:text-primary-800 transition-colors duration-200 cursor-pointer bg-transparent border-none"
+                    onClick={(e) => handleInquire(e, image)}
+                    className="inline-flex items-center gap-1 text-[11px] font-medium text-white bg-primary-700 hover:bg-primary-800 px-3 py-1.5 rounded-lg transition-all duration-200 ease-apple active:scale-95 cursor-pointer border-none"
                   >
-                    View →
+                    <ShoppingBag size={12} strokeWidth={2} />
+                    Inquire
                   </button>
                 </div>
               </div>
@@ -141,6 +176,21 @@ export default function Gallery() {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {/* Toast */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[700] bg-primary-900 text-white text-xs sm:text-sm px-5 py-3 rounded-xl shadow-xl flex items-center gap-2"
+          >
+            <ShoppingBag size={14} />
+            <span>Opening Messenger for <strong>{toast}</strong>...</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Lightbox */}
       <Modal open={!!lightboxImage} onClose={closeLightbox}>
