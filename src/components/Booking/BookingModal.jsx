@@ -57,11 +57,11 @@ export default function BookingModal() {
       onClick={(e) => { if (e.target === e.currentTarget) close(); }}
     >
       <div
-        className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl animate-[slideUp_0.3s_ease-out]"
+        className="bg-white rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl animate-[slideUp_0.3s_ease-out]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white z-10 flex items-center justify-between p-4 sm:p-6 border-b border-primary-100 rounded-t-2xl">
+        <div className="sticky top-0 bg-white z-10 flex items-center justify-between p-4 sm:p-6 border-b border-black/5 rounded-t-xl">
           <h3 className="text-xl font-semibold text-primary-900 flex items-center gap-2">
             <Calendar size={22} strokeWidth={1.8} className="text-primary-600" />
             Book Your Visit

@@ -5,45 +5,29 @@ import SectionTitle from '../ui/SectionTitle';
 
 const AUTO_SLIDE_MS = 4000;
 
-/**
- * Guest testimonials — auto-sliding carousel with glassmorphism cards,
- * navigation dots, arrow controls, and pause-on-hover.
- * Cards are fully responsive — no text overflow on any screen size.
- */
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef(null);
   const total = TESTIMONIALS.length;
 
-  const scrollToSlide = useCallback(
-    (index) => {
-      const container = containerRef.current;
-      if (!container) return;
-      const card = container.children[index];
-      if (!card) return;
-      const containerPadding = 4; // px-1
-      container.scrollTo({
-        left: card.offsetLeft - containerPadding,
-        behavior: 'smooth',
-      });
-    },
-    []
-  );
+  const scrollToSlide = useCallback((index) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const card = container.children[index];
+    if (!card) return;
+    container.scrollTo({ left: card.offsetLeft - 4, behavior: 'smooth' });
+  }, []);
 
-  const goTo = useCallback(
-    (index) => {
-      const next = ((index % total) + total) % total;
-      setCurrent(next);
-      scrollToSlide(next);
-    },
-    [total, scrollToSlide]
-  );
+  const goTo = useCallback((index) => {
+    const next = ((index % total) + total) % total;
+    setCurrent(next);
+    scrollToSlide(next);
+  }, [total, scrollToSlide]);
 
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
 
-  // Auto-slide
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
@@ -56,114 +40,73 @@ export default function Testimonials() {
     return () => clearInterval(timer);
   }, [isPaused, total, scrollToSlide]);
 
-  // Sync current index on manual scroll
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
     const handleScroll = () => {
       const children = Array.from(container.children);
       if (!children.length) return;
-
       const containerCenter = container.scrollLeft + container.offsetWidth / 2;
-
-      let closestIdx = 0;
-      let closestDist = Infinity;
-
+      let closestIdx = 0, closestDist = Infinity;
       children.forEach((child, i) => {
         const cardCenter = child.offsetLeft + child.offsetWidth / 2;
         const dist = Math.abs(containerCenter - cardCenter);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closestIdx = i;
-        }
+        if (dist < closestDist) { closestDist = dist; closestIdx = i; }
       });
-
-      if (closestIdx !== current) {
-        setCurrent(closestIdx);
-      }
+      if (closestIdx !== current) setCurrent(closestIdx);
     };
-
     container.addEventListener('scroll', handleScroll, { passive: true });
     return () => container.removeEventListener('scroll', handleScroll);
   }, [current]);
 
   return (
-    <section className="bg-primary-50 section-padding overflow-hidden">
+    <section className="bg-primary-50/70 section-padding overflow-hidden">
       <div className="container">
         <SectionTitle center>Guest Stories</SectionTitle>
 
-        {/* Carousel Container */}
         <div
           ref={containerRef}
-          className="flex gap-3 sm:gap-6 overflow-x-auto pb-10 pt-4 snap-x snap-mandatory hide-scrollbar"
+          className="flex gap-3 sm:gap-4 overflow-x-auto pb-8 pt-2 snap-x snap-mandatory hide-scrollbar"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           {TESTIMONIALS.map((item) => (
             <div
               key={item.id}
-              className="w-[80vw] max-w-[380px] sm:w-auto sm:min-w-[340px] flex-shrink-0 snap-center bg-white/50 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_20px_40px_rgba(0,0,0,0.04)] border border-white/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_30px_50px_rgba(27,94,32,0.08)]"
+              className="w-[80vw] max-w-[380px] sm:w-auto sm:min-w-[340px] flex-shrink-0 snap-center bg-white rounded-xl p-5 sm:p-6 border border-black/5 shadow-card transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-card-hover"
             >
-              {/* Stars */}
-              <div className="flex gap-1 mb-4">
+              <div className="flex gap-0.5 mb-3">
                 {Array.from({ length: item.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={18}
-                    className="text-yellow-500 fill-yellow-500 flex-shrink-0"
-                  />
+                  <Star key={i} size={14} className="text-amber-400 fill-amber-400" />
                 ))}
               </div>
-
-              <p className="text-primary-800/80 text-sm sm:text-base leading-relaxed mb-5 italic break-words">
+              <p className="text-sm text-primary-800/70 leading-relaxed mb-4 italic">
                 &ldquo;{item.text}&rdquo;
               </p>
-
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary-200 flex items-center justify-center text-primary-900 font-semibold text-sm flex-shrink-0">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-semibold text-xs flex-shrink-0">
                   {item.author.charAt(0)}
                 </div>
-                <h4 className="text-primary-900 font-semibold text-sm sm:text-base">
-                  {item.author}
-                </h4>
+                <h4 className="text-primary-900 font-semibold text-sm">{item.author}</h4>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Controls: arrows + dots */}
-        <div className="flex items-center justify-center gap-3 sm:gap-4 mt-2">
-          <button
-            onClick={prev}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-primary-200 flex items-center justify-center text-primary-700 hover:bg-primary-50 hover:border-primary-400 transition-colors cursor-pointer shadow-sm"
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft size={18} strokeWidth={2} />
+        <div className="flex items-center justify-center gap-3 mt-4">
+          <button onClick={prev} className="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200 ease-apple cursor-pointer shadow-sm">
+            <ChevronLeft size={16} strokeWidth={2} />
           </button>
-
-          {/* Dots */}
-          <div className="flex gap-2">
+          <div className="flex gap-1.5">
             {TESTIMONIALS.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer border-none ${
-                  i === current
-                    ? 'bg-primary-700 w-6 sm:w-7'
-                    : 'w-2.5 bg-primary-200 hover:bg-primary-400'
-                }`}
+              <button key={i} onClick={() => goTo(i)}
+                className={`h-2 rounded-full transition-all duration-300 ease-apple cursor-pointer border-none ${i === current ? 'bg-primary-600 w-5' : 'w-2 bg-primary-200 hover:bg-primary-300'}`}
                 aria-label={`Go to testimonial ${i + 1}`}
               />
             ))}
           </div>
-
-          <button
-            onClick={next}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-primary-200 flex items-center justify-center text-primary-700 hover:bg-primary-50 hover:border-primary-400 transition-colors cursor-pointer shadow-sm"
-            aria-label="Next testimonial"
-          >
-            <ChevronRight size={18} strokeWidth={2} />
+          <button onClick={next} className="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200 ease-apple cursor-pointer shadow-sm">
+            <ChevronRight size={16} strokeWidth={2} />
           </button>
         </div>
       </div>

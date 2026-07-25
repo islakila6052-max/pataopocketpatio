@@ -5,10 +5,6 @@ import { useBooking } from '../../context/BookingContext';
 import Button from '../ui/Button';
 import { cn } from '../../utils/helpers';
 
-/**
- * Fixed navbar with glassmorphism on scroll, mobile hamburger menu,
- * and smooth-scroll anchor links. Uses Lucide icons — no emojis.
- */
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -24,45 +20,31 @@ export default function Navbar() {
     e.preventDefault();
     setMobileOpen(false);
     const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 w-full z-[1000] transition-all duration-300',
+        'fixed top-0 left-0 w-full z-[1000] transition-all duration-300 ease-apple',
         scrolled
-          ? 'bg-white/78 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,20,0,0.06)] py-3'
-          : 'bg-transparent py-[18px]'
+          ? 'bg-white/85 backdrop-blur-xl border-b border-black/5 py-2.5'
+          : 'bg-transparent py-3.5'
       )}
     >
-      <div className="container flex items-center justify-between flex-wrap">
-        {/* Logo */}
+      <div className="container flex items-center justify-between">
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, '#home')}
           className={cn(
-            'flex items-center gap-2 text-xl font-bold tracking-tight transition-colors',
+            'flex items-center gap-2 text-base sm:text-lg font-bold tracking-tight transition-colors duration-200',
             scrolled ? 'text-primary-900' : 'text-white'
           )}
         >
-          <Leaf
-            size={26}
-            strokeWidth={1.8}
-            className={cn(
-              'transition-colors',
-              scrolled ? 'text-primary-700' : 'text-white'
-            )}
-          />
-          <span className="text-base sm:text-xl">{SITE_SHORT}</span>
-          <span className="font-light hidden xs:inline text-sm sm:text-base">
-            &amp; Plant Sanctuary
-          </span>
+          <Leaf size={22} strokeWidth={1.8} className={cn('transition-colors', scrolled ? 'text-primary-600' : 'text-white')} />
+          <span>{SITE_SHORT}</span>
         </a>
 
-        {/* Hamburger */}
         <button
           className="flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-1 md:hidden"
           onClick={() => setMobileOpen((prev) => !prev)}
@@ -70,42 +52,21 @@ export default function Navbar() {
           aria-expanded={mobileOpen}
         >
           {mobileOpen ? (
-            <X
-              size={28}
-              strokeWidth={2}
-              className={scrolled ? 'text-primary-900' : 'text-white'}
-            />
+            <X size={24} strokeWidth={2} className={scrolled ? 'text-primary-900' : 'text-white'} />
           ) : (
             <>
-              <span
-                className={cn(
-                  'block w-7 h-0.5 rounded transition-colors',
-                  scrolled ? 'bg-primary-900' : 'bg-white'
-                )}
-              />
-              <span
-                className={cn(
-                  'block w-7 h-0.5 rounded transition-colors',
-                  scrolled ? 'bg-primary-900' : 'bg-white'
-                )}
-              />
-              <span
-                className={cn(
-                  'block w-7 h-0.5 rounded transition-colors',
-                  scrolled ? 'bg-primary-900' : 'bg-white'
-                )}
-              />
+              <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled ? 'bg-primary-900' : 'bg-white')} />
+              <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled ? 'bg-primary-900' : 'bg-white')} />
+              <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled ? 'bg-primary-900' : 'bg-white')} />
             </>
           )}
         </button>
 
-        {/* Nav Links */}
         <ul
           className={cn(
-            'flex gap-8 items-center list-none font-medium',
+            'flex gap-6 items-center list-none font-medium text-sm',
             'max-md:hidden',
-            mobileOpen &&
-              '!flex flex-col w-full bg-white/92 backdrop-blur-xl p-5 rounded-2xl mt-4 md:hidden'
+            mobileOpen && '!flex flex-col w-full bg-white/95 backdrop-blur-xl p-4 rounded-xl mt-3 border border-black/5 md:hidden'
           )}
         >
           {NAV_LINKS.map((link) => (
@@ -114,10 +75,10 @@ export default function Navbar() {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={cn(
-                  'text-[0.95rem] relative transition-colors hover:text-primary-200',
-                  scrolled
-                    ? 'text-primary-950 hover:!text-primary-700'
-                    : 'text-white'
+                  'relative text-[13px] font-medium transition-colors duration-200',
+                  'after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-primary-500 after:transition-all after:duration-300 after:ease-apple',
+                  'after:w-0 hover:after:w-full',
+                  scrolled ? 'text-primary-800' : 'text-white/90'
                 )}
               >
                 {link.label}

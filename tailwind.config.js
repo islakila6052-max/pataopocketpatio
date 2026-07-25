@@ -29,12 +29,17 @@ export default {
         '5xl': '3rem',
       },
       boxShadow: {
-        'green': '0 8px 20px rgba(46, 125, 50, 0.25)',
+        green: '0 8px 20px rgba(46, 125, 50, 0.25)',
         'green-lg': '0 16px 30px rgba(46, 125, 50, 0.35)',
-        'card': '0 12px 30px rgba(0, 0, 0, 0.04)',
-        'card-hover': '0 24px 48px rgba(46, 125, 50, 0.10)',
-        'exp': '0 12px 28px rgba(0, 0, 0, 0.04)',
-        'exp-hover': '0 30px 50px rgba(27, 94, 32, 0.12)',
+        card: '0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04)',
+        'card-hover': '0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(46,125,50,0.08)',
+        exp: '0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.03)',
+        'exp-hover': '0 4px 8px rgba(0,0,0,0.06), 0 16px 32px rgba(27,94,32,0.10)',
+      },
+      transitionTimingFunction: {
+        'apple': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
       },
       animation: {
         'bounce-slow': 'bounce 2s infinite',

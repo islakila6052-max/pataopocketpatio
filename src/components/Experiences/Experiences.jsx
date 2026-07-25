@@ -1,25 +1,19 @@
 import { EXPERIENCES } from '../../constants/experiences';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import SectionTitle from '../ui/SectionTitle';
-import { cn } from '../../utils/helpers';
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerChildren } from '../../utils/animations';
 
-/**
- * Featured Experiences — responsive card grid with images and Lucide icons.
- */
 export default function Experiences() {
   const [ref, visible] = useScrollAnimation({ threshold: 0.1 });
 
   return (
-    <section id="experiences" className="bg-primary-50 section-padding">
+    <section id="experiences" className="bg-primary-50/70 section-padding">
       <div className="container" ref={ref}>
-        <SectionTitle center>
-          Featured Experiences
-        </SectionTitle>
+        <SectionTitle center>Featured Experiences</SectionTitle>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-8"
           variants={staggerChildren}
           initial="hidden"
           animate={visible ? 'visible' : 'hidden'}
@@ -28,34 +22,26 @@ export default function Experiences() {
             <motion.div
               key={exp.id}
               variants={fadeInUp}
-              className="bg-white rounded-2xl overflow-hidden shadow-exp border border-primary-100/20 transition-all duration-300 hover:-translate-y-3 hover:shadow-exp-hover group"
+              className="group bg-white rounded-xl overflow-hidden border border-black/5 shadow-card transition-all duration-300 ease-apple hover:-translate-y-1.5 hover:shadow-card-hover"
             >
-              <div className="relative overflow-hidden h-44 sm:h-48">
+              <div className="relative overflow-hidden h-40 sm:h-44">
                 <img
                   src={exp.image}
                   alt={exp.title}
                   loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-500 ease-apple group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              <div className="p-5">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-9 h-9 rounded-xl bg-primary-50 flex items-center justify-center group-hover:bg-primary-100 transition-colors">
-                    <exp.icon
-                      size={18}
-                      className="text-primary-700"
-                      strokeWidth={1.8}
-                    />
+              <div className="p-4 sm:p-5">
+                <div className="flex items-center gap-2.5 mb-2">
+                  <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center">
+                    <exp.icon size={16} className="text-primary-600" strokeWidth={1.8} />
                   </div>
-                  <h4 className="text-primary-900 font-semibold text-lg">
-                    {exp.title}
-                  </h4>
+                  <h4 className="text-primary-900 font-semibold text-sm">{exp.title}</h4>
                 </div>
-                <p className="text-primary-700/70 text-sm leading-relaxed pl-12">
-                  {exp.description}
-                </p>
+                <p className="text-primary-700/50 text-xs leading-relaxed pl-10.5">{exp.description}</p>
               </div>
             </motion.div>
           ))}
