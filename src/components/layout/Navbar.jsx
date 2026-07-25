@@ -66,27 +66,22 @@ export default function Navbar() {
           className={cn(
             'flex gap-6 items-center list-none font-medium text-sm',
             'max-md:hidden',
-            mobileOpen && '!flex flex-col w-full bg-white/95 backdrop-blur-xl p-4 rounded-xl mt-3 border border-black/5 md:hidden'
+            mobileOpen && '!flex flex-col w-full bg-white shadow-xl rounded-xl mt-2 p-2 gap-0 border border-black/5 overflow-hidden'
           )}
         >
           {NAV_LINKS.map((link) => (
-            <li key={link.href}>
+            <li key={link.href} className="w-full">
               <a
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={cn(
-                  'relative text-[13px] font-medium transition-colors duration-200',
-                  'after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-primary-500 after:transition-all after:duration-300 after:ease-apple',
-                  'after:w-0 hover:after:w-full',
-                  scrolled ? 'text-primary-800' : 'text-white/90'
-                )}
+                className="block w-full px-4 py-3 text-sm font-medium text-neutral-700 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors duration-150"
               >
                 {link.label}
               </a>
             </li>
           ))}
-          <li>
-            <Button size="sm" onClick={() => { setMobileOpen(false); openBooking(); }}>
+          <li className="w-full px-2 pt-2 pb-2">
+            <Button size="sm" onClick={() => { setMobileOpen(false); openBooking(); }} className="w-full">
               Book a Visit
             </Button>
           </li>
