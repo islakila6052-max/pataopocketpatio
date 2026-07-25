@@ -1,16 +1,21 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ToastProvider } from './context/ToastContext';
 import { BookingProvider } from './context/BookingContext';
+import LoadingScreen from './components/LoadingScreen';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
 import NotFound from './pages/NotFound';
 
-/**
- * Root application — routes, providers, booking context.
- */
 export default function App() {
+  const [loading, setLoading] = useState(true);
+
+  if (loading) {
+    return <LoadingScreen onFinish={() => setLoading(false)} />;
+  }
+
   return (
     <HelmetProvider>
       <ToastProvider>
