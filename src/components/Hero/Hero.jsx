@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Sparkles, Leaf } from 'lucide-react';
+import { ChevronDown, Sparkles } from 'lucide-react';
 import { useBooking } from '../../context/BookingContext';
 import Button from '../ui/Button';
 
@@ -78,37 +78,7 @@ export default function Hero() {
       {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/65 z-[1]" />
       <div className="absolute inset-0 bg-gradient-to-r from-primary-900/20 via-transparent to-primary-900/20 z-[1]" />
-
-      {/* Floating particles */}
-      <div className="absolute inset-0 z-[2] pointer-events-none">
-        {[...Array(8)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute"
-            style={{
-              left: `${10 + i * 12}%`,
-              top: `${15 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [-10, 10, -10],
-              opacity: [0.15, 0.35, 0.15],
-              rotate: [0, i % 2 === 0 ? 10 : -10, 0],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: i * 0.5,
-            }}
-          >
-            <Leaf
-              size={18 + i * 3}
-              strokeWidth={1}
-              className="text-white/30"
-            />
-          </motion.div>
-        ))}
-      </div>
+/>
 
       {/* Content */}
       <motion.div
