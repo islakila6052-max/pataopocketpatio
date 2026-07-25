@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { Outlet } from 'react-router-dom';
 import ScrollProgress from '../components/layout/ScrollProgress';
 import FloatingButtons from '../components/layout/FloatingButtons';
@@ -5,12 +6,13 @@ import Footer from '../components/layout/Footer';
 import Navbar from '../components/layout/Navbar';
 import BookingModal from '../components/Booking/BookingModal';
 
-/**
- * Root layout — nav, footer, floating buttons, and the global booking modal.
- */
 export default function MainLayout() {
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    >
       <ScrollProgress />
       <Navbar />
       <main className="overflow-x-hidden">
@@ -19,6 +21,6 @@ export default function MainLayout() {
       <Footer />
       <FloatingButtons />
       <BookingModal />
-    </>
+    </motion.div>
   );
 }
