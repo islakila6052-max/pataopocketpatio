@@ -101,7 +101,7 @@ export default function Contact() {
           </h3>
 
           {status === 'success' ? (
-            <div className="bg-primary-50 border border-primary-200 rounded-2xl p-8 text-center animate-[fadeIn_0.4s_ease-out]">
+            <div className="bg-primary-50 border border-primary-200 rounded-2xl p-6 sm:p-8 text-center animate-[fadeIn_0.4s_ease-out]">
               <div className="w-14 h-14 rounded-full bg-primary-200 flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-7 h-7 text-primary-700"

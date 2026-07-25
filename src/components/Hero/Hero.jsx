@@ -118,7 +118,7 @@ export default function Hero() {
 
       {/* Content */}
       <motion.div
-        className="relative z-[3] max-w-[820px] mx-auto text-center px-6 pt-20 pb-16"
+        className="relative z-[3] max-w-[820px] mx-auto text-center px-4 sm:px-6 pt-16 sm:pt-20 pb-14"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -135,7 +135,7 @@ export default function Hero() {
         {/* Headline */}
         <motion.h1
           variants={fadeUp}
-          className="text-[2.8rem] sm:text-[3.8rem] lg:text-[5rem] font-bold tracking-tight leading-[1.05] mb-6 text-white"
+          className="text-[2rem] xs:text-[2.4rem] sm:text-[3.2rem] lg:text-[5rem] font-bold tracking-tight leading-[1.08] mb-5 sm:mb-6 text-white"
           style={{ textShadow: '0 2px 40px rgba(0,0,0,0.3)' }}
         >
           Escape Into{' '}
@@ -148,7 +148,7 @@ export default function Hero() {
         {/* Subtitle */}
         <motion.p
           variants={fadeUp}
-          className="text-base sm:text-lg lg:text-xl font-light text-white/80 max-w-[580px] mx-auto mb-10 leading-relaxed"
+          className="text-sm sm:text-lg lg:text-xl font-light text-white/80 max-w-[580px] mx-auto mb-8 sm:mb-10 leading-relaxed"
         >
           Discover breathtaking botanical gardens, relaxing resort pools,
           peaceful patios, and unforgettable moments surrounded by nature.
@@ -157,21 +157,21 @@ export default function Hero() {
         {/* Buttons */}
         <motion.div
           variants={fadeUp}
-          className="flex gap-4 justify-center flex-wrap max-sm:flex-col max-sm:items-center"
+          className="flex gap-3 sm:gap-4 justify-center flex-wrap max-sm:flex-col max-sm:items-stretch max-sm:px-2"
         >
-          <a href="#gallery" onClick={handleGalleryScroll}>
+          <a href="#gallery" onClick={handleGalleryScroll} className="max-sm:w-full">
             <Button
               size="lg"
-              className="!bg-white !text-primary-900 hover:!bg-green-50 !shadow-2xl !shadow-white/20 !px-8"
+              className="!bg-white !text-primary-900 hover:!bg-green-50 !shadow-2xl !shadow-white/20 !px-8 !w-full sm:!w-auto"
             >
               Explore the Garden
             </Button>
           </a>
-          <button onClick={openBooking}>
+          <button onClick={openBooking} className="max-sm:w-full">
             <Button
               variant="outline-light"
               size="lg"
-              className="!border-white/40 !text-white hover:!bg-white/10 !backdrop-blur-sm !px-8"
+              className="!border-white/40 !text-white hover:!bg-white/10 !backdrop-blur-sm !px-8 !w-full sm:!w-auto"
             >
               Book Your Visit
             </Button>
@@ -181,18 +181,18 @@ export default function Hero() {
         {/* Stats row */}
         <motion.div
           variants={fadeIn}
-          className="flex justify-center gap-8 sm:gap-12 mt-14 text-white/70 text-sm"
+          className="flex justify-center gap-6 sm:gap-12 mt-10 sm:mt-14 text-white/70"
         >
           {[
-            { value: '5,200+', label: 'Happy Visitors' },
-            { value: '680+', label: 'Plant Species' },
-            { value: '14', label: 'Resort Rooms' },
+            { value: '5,200+', label: 'Visitors' },
+            { value: '680+', label: 'Species' },
+            { value: '14', label: 'Rooms' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-white">
+              <div className="text-lg sm:text-2xl font-bold text-white">
                 {stat.value}
               </div>
-              <div className="text-xs sm:text-sm text-white/50 mt-1">
+              <div className="text-[10px] sm:text-sm text-white/50 mt-0.5 sm:mt-1">
                 {stat.label}
               </div>
             </div>
@@ -202,7 +202,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[3] text-white/60"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-[3] text-white/60"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
       >

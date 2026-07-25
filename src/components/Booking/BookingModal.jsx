@@ -61,7 +61,7 @@ export default function BookingModal() {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white z-10 flex items-center justify-between p-6 border-b border-primary-100 rounded-t-4xl">
+        <div className="sticky top-0 bg-white z-10 flex items-center justify-between p-4 sm:p-6 border-b border-primary-100 rounded-t-2xl">
           <h3 className="text-xl font-semibold text-primary-900 flex items-center gap-2">
             <Calendar size={22} strokeWidth={1.8} className="text-primary-600" />
             Book Your Visit
@@ -75,7 +75,7 @@ export default function BookingModal() {
         </div>
 
         {/* Body */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {status === 'success' ? (
             <div className="text-center py-8 animate-[fadeIn_0.4s_ease-out]">
               <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">

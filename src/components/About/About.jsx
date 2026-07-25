@@ -23,7 +23,7 @@ export default function About() {
             src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80"
             alt="Tropical botanical garden at Patao Pocket Sanctuary"
             loading="lazy"
-            className="rounded-2xl shadow-[0_30px_60px_rgba(27,94,32,0.15)] h-[300px] sm:h-[400px] lg:h-[480px] w-full object-cover"
+            className="rounded-2xl shadow-[0_30px_60px_rgba(27,94,32,0.15)] h-[240px] sm:h-[320px] lg:h-[480px] w-full object-cover"
           />
         </div>
 

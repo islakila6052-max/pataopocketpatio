@@ -28,7 +28,7 @@ export default function Resort() {
             src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80"
             alt="Luxury resort pool at Patao Pocket"
             loading="lazy"
-            className="rounded-2xl h-[280px] sm:h-[360px] lg:h-[400px] w-full object-cover shadow-[0_24px_50px_rgba(0,0,0,0.08)]"
+            className="rounded-2xl h-[200px] sm:h-[300px] lg:h-[400px] w-full object-cover shadow-[0_24px_50px_rgba(0,0,0,0.08)]"
           />
         </div>
 

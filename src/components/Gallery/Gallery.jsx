@@ -43,7 +43,7 @@ export default function Gallery() {
       </div>
 
       {/* Masonry Grid */}
-      <div className="columns-2 md:columns-3 gap-4 md:gap-5 space-y-4 md:space-y-5">
+      <div className="columns-1 xs:columns-2 md:columns-3 gap-4 md:gap-5 space-y-4 md:space-y-5">
         {filteredImages.map((image) => (
           <div
             key={image.id}

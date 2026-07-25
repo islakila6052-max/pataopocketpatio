@@ -56,8 +56,8 @@ export default function Navbar() {
               scrolled ? 'text-primary-700' : 'text-white'
             )}
           />
-          <span>{SITE_SHORT}</span>
-          <span className="font-light hidden sm:inline text-base">
+          <span className="text-base sm:text-xl">{SITE_SHORT}</span>
+          <span className="font-light hidden xs:inline text-sm sm:text-base">
             &amp; Plant Sanctuary
           </span>
         </a>

@@ -16,7 +16,7 @@ export default function SectionTitle({
         {children}
       </Tag>
       {subtitle && (
-        <p className="text-lg text-primary-800/80 max-w-xl mt-4 text-balance mx-auto">
+        <p className="text-base sm:text-lg text-primary-800/80 max-w-xl mt-3 sm:mt-4 text-balance mx-auto">
           {subtitle}
         </p>
       )}
