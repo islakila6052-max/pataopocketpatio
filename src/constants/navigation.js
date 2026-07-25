@@ -8,8 +8,8 @@ export const NAV_LINKS = [
   { href: '#contact', label: 'Contact' },
 ];
 
-export const SITE_NAME = 'Patao Pocket Patio & Plant Sanctuary';
-export const SITE_SHORT = 'Patao Pocket';
+export const SITE_NAME = 'Patao Pocket Patio & PS';
+export const SITE_SHORT = 'Patao Pocket Patio & PS';
 export const PHONE = '+63 912 345 6789';
 export const EMAIL = 'hello@pataosanctuary.com';
 export const ADDRESS = 'Patao Pocket, Nature Valley';

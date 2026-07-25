@@ -103,7 +103,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-primary-800/30 mt-8 pt-5 text-center text-primary-500/40 text-[11px]">
-          &copy; {new Date().getFullYear()} {SITE_SHORT} &amp; Plant Sanctuary — all rights reserved.
+          &copy; {new Date().getFullYear()} {SITE_SHORT} — all rights reserved.
         </div>
       </div>
     </footer>

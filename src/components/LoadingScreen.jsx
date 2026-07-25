@@ -31,9 +31,9 @@ export default function LoadingScreen({ onFinish }) {
         <div className="absolute inset-0 rounded-2xl border border-primary-400/20 animate-ping opacity-40" />
       </div>
       <h1 className="text-white text-xl font-semibold tracking-tight mb-1">
-        Patao Pocket
+        Patao Pocket Patio &amp; PS
       </h1>
-      <p className="text-primary-300/60 text-sm font-light">
+      <p className="text-white/40 text-sm font-light">
         Nature Sanctuary &amp; Resort
       </p>
       <div className="mt-8 w-48 h-1 rounded-full bg-white/10 overflow-hidden">
