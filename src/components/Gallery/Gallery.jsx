@@ -73,9 +73,9 @@ export default function Gallery() {
               </span>
             </div>
 
-            {/* Category badge (always visible, subtle) */}
+            {/* Category badge */}
             <div className="absolute top-2.5 left-2.5 z-10">
-              <span className="px-2 py-0.5 rounded-md bg-black/30 backdrop-blur-sm text-white/80 text-[10px] font-medium uppercase tracking-wide">
+              <span className="px-2 py-0.5 rounded-md bg-primary-700/60 backdrop-blur-sm text-white/90 text-[10px] font-medium capitalize">
                 {image.category}
               </span>
             </div>
