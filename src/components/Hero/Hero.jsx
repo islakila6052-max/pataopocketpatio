@@ -5,10 +5,10 @@ import { useBooking } from '../../context/BookingContext';
 import Button from '../ui/Button';
 
 const SLIDESHOW = [
-  'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=1600&q=80',
-  'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=80',
-  'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80',
-  'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80',
+  'https://images.unsplash.com/photo-1604762524889-3e2fcc145683?w=1600&q=80',
+  'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=1600&q=80',
+  'https://images.unsplash.com/photo-1509937528035-ad76254b0356?w=1600&q=80',
+  'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1600&q=80',
 ];
 
 const STATS = [
@@ -81,8 +81,8 @@ export default function Hero() {
           style={{ backgroundImage: `url(${src})`, transform: `translateY(${scrollY * 0.3}px) scale(1.02)` }}
           initial={{ opacity: 0 }} animate={{ opacity: i === bgIndex ? 1 : 0 }} transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }} />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/70 z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-primary-900/15 via-transparent to-primary-900/15 z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/15 to-black/75 z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/20 z-[1]" />
       <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary-500/10 blur-[120px] z-[1]"
         animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} />
 
