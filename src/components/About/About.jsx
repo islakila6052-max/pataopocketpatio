@@ -13,8 +13,8 @@ export default function About() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <BlurReveal className="w-full">
           <img
-            src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80"
-            alt="Tropical botanical garden at Patao Pocket"
+            src="/bon.jpg"
+            alt="Patao Pocket Patio & PS"
             loading="lazy"
             className="rounded-xl shadow-[0_4px_24px_rgba(27,94,32,0.10)] h-[240px] sm:h-[320px] lg:h-[480px] w-full object-cover"
           />
