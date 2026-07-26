@@ -6,6 +6,7 @@ import { GALLERY_IMAGES } from '../constants/gallery';
 import SectionTitle from './ui/SectionTitle';
 import Button from './ui/Button';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import bon1 from '../assets/images/bon1.png';
 
 const previewPlants = [
   GALLERY_IMAGES[0],
@@ -125,7 +126,7 @@ export default function GalleryPreview() {
                 <Link to="/gallery"
                   className="block bg-white rounded-xl border border-black/[0.06] overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
                   <div className="aspect-[3/4] overflow-hidden relative">
-                    <img src={plant.images[0]} alt={plant.name} loading="lazy"
+                    <img src={bon1} alt={plant.name} loading="lazy"
                       className="w-full h-full object-cover object-center transition-transform duration-600 ease-apple hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-400 ease-apple flex items-end p-3">
                       <div className="flex items-center gap-1.5 text-white text-xs font-medium">
@@ -169,7 +170,7 @@ export default function GalleryPreview() {
                 <Link to="/gallery" key={plant.id}
                   className="w-[65vw] max-w-[240px] flex-shrink-0 snap-center group bg-white rounded-xl border border-black/[0.06] overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <div className="aspect-[3/4] overflow-hidden">
-                    <img src={plant.images[0]} alt={plant.name} loading="lazy"
+                    <img src={bon1} alt={plant.name} loading="lazy"
                       className="w-full h-full object-cover object-center transition-transform duration-500 ease-apple group-hover:scale-105" />
                   </div>
                   <div className="p-2.5">
