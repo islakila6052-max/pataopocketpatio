@@ -25,12 +25,19 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.08, delayChildren: 0.3 } },
 };
 
-const cardVariant = {
+const slotFromLeft = {
+  hidden: { opacity: 0, x: -80 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const slotFromRight = {
+  hidden: { opacity: 0, x: 80 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const slotFromBottom = {
   hidden: { opacity: 0, y: 60 },
-  visible: {
-    opacity: 1, y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
 };
 
 function TiltCard({ plant, children }) {
@@ -110,8 +117,10 @@ export default function GalleryPreview() {
           initial="hidden"
           animate={isVisible ? 'visible' : 'hidden'}
         >
-          {previewPlants.slice(0, 5).map((plant) => (
-            <motion.div key={plant.id} variants={cardVariant}>
+          {previewPlants.slice(0, 5).map((plant, i) => {
+            const variant = i === 0 ? slotFromLeft : i === 4 ? slotFromRight : slotFromBottom;
+            return (
+              <motion.div key={plant.id} variants={variant}>
               <TiltCard plant={plant}>
                 <Link to="/gallery"
                   className="block bg-white rounded-xl border border-black/[0.06] overflow-hidden transition-shadow duration-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
@@ -136,7 +145,8 @@ export default function GalleryPreview() {
                 </Link>
               </TiltCard>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
 
         {/* Mobile: Horizontal scroll */}
