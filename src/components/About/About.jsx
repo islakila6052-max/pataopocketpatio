@@ -3,6 +3,7 @@ import { FEATURES } from '../../constants/events';
 import SectionTitle from '../ui/SectionTitle';
 import BlurReveal from '../ui/BlurReveal';
 import { cn } from '../../utils/helpers';
+import aboutImage from '../../assets/images/bon.jpg';
 
 export default function About() {
   const [imgRef, imgVisible] = useScrollAnimation({ threshold: 0.2 });
@@ -13,7 +14,7 @@ export default function About() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <BlurReveal className="w-full">
           <img
-            src="/bon.jpg"
+            src={aboutImage}
             alt="Patao Pocket Patio & PS"
             loading="lazy"
             className="rounded-xl shadow-[0_4px_24px_rgba(27,94,32,0.10)] h-[240px] sm:h-[320px] lg:h-[480px] w-full object-cover"
