@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import { X, Image, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ShoppingBag, ChevronLeft, ChevronRight, Search, SlidersHorizontal, PawPrint } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_IMAGES, GALLERY_FILTERS } from '../constants/gallery';
 import SectionTitle from '../components/ui/SectionTitle';
@@ -52,14 +52,34 @@ function LazyImage({ src, alt }) {
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [careFilter, setCareFilter] = useState('all');
+  const [lightFilter, setLightFilter] = useState('all');
+  const [petFriendlyOnly, setPetFriendlyOnly] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const [toast, setToast] = useState(null);
 
-  const filtered = useMemo(() =>
-    (activeFilter === 'all' ? GALLERY_IMAGES : GALLERY_IMAGES.filter(img => img.category === activeFilter))
-      .filter(p => search === '' || p.name.toLowerCase().includes(search.toLowerCase())),
-    [activeFilter, search]
-  );
+  const careOptions = useMemo(() => [...new Set(GALLERY_IMAGES.map(plant => plant.care))], []);
+  const lightOptions = useMemo(() => [...new Set(GALLERY_IMAGES.map(plant => plant.light))], []);
+  const hasActiveFilters = search.trim() !== '' || activeFilter !== 'all' || careFilter !== 'all' || lightFilter !== 'all' || petFriendlyOnly;
+
+  const filtered = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return GALLERY_IMAGES.filter((plant) => (
+      (activeFilter === 'all' || plant.category === activeFilter)
+      && (careFilter === 'all' || plant.care === careFilter)
+      && (lightFilter === 'all' || plant.light === lightFilter)
+      && (!petFriendlyOnly || plant.petSafe)
+      && (!query || `${plant.name} ${plant.scientific}`.toLowerCase().includes(query))
+    ));
+  }, [activeFilter, careFilter, lightFilter, petFriendlyOnly, search]);
+
+  const clearFilters = () => {
+    setActiveFilter('all');
+    setSearch('');
+    setCareFilter('all');
+    setLightFilter('all');
+    setPetFriendlyOnly(false);
+  };
 
   const openLightbox = useCallback((plant) => setLightbox({ plant, index: 0 }), []);
   const closeLightbox = useCallback(() => setLightbox(null), []);
@@ -82,25 +102,106 @@ export default function GalleryPage() {
 
   return (
     <section className="container section-padding">
-      <SectionTitle center>Plant Collection</SectionTitle>
+      <div className="mx-auto mb-10 max-w-2xl text-center">
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-600">Find your next plant</p>
+        <SectionTitle center className="mb-0" subtitle="Browse by plant type, care level, or light needs to find the right fit for your home and garden.">
+          Plant Collection
+        </SectionTitle>
+      </div>
 
       {/* Search + Filters */}
-      <div className="flex flex-col items-center gap-4 mb-6">
-        <div className="relative w-full max-w-sm">
-          <Image size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
-          <input type="text" placeholder="Search plants..." value={search} onChange={e => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 bg-white text-sm outline-none focus:border-primary-400 transition" />
+      <div className="mb-8 rounded-2xl border border-primary-900/10 bg-white p-4 shadow-[0_8px_30px_rgba(29,55,41,0.05)] sm:p-5">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <label className="relative block flex-1">
+              <span className="sr-only">Search by plant name or scientific name</span>
+              <Search size={17} aria-hidden="true" className="absolute left-4 top-1/2 -translate-y-1/2 text-primary-700/50" />
+              <input
+                type="search"
+                placeholder="Search common or scientific name"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="w-full rounded-xl border border-primary-900/15 bg-[#fbfaf6] py-3 pl-11 pr-4 text-sm text-primary-900 outline-none transition placeholder:text-primary-800/45 focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+              />
+            </label>
+            <label className="flex min-h-11 items-center gap-2 rounded-xl border border-primary-900/15 bg-[#fbfaf6] px-4 text-sm text-primary-800">
+              <PawPrint size={16} className="text-primary-600" aria-hidden="true" />
+              <input
+                type="checkbox"
+                checked={petFriendlyOnly}
+                onChange={e => setPetFriendlyOnly(e.target.checked)}
+                className="accent-primary-700"
+              />
+              Pet-friendly
+            </label>
+          </div>
+
+          <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-primary-700/65">
+            <SlidersHorizontal size={14} aria-hidden="true" />
+            Browse by type
+          </div>
+          <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 hide-scrollbar">
+            {GALLERY_FILTERS.map(f => (
+              <button
+                key={f.value}
+                type="button"
+                onClick={() => setActiveFilter(f.value)}
+                aria-pressed={activeFilter === f.value}
+                className={cn(
+                  'shrink-0 rounded-full border px-4 py-2 text-xs font-medium transition-colors',
+                  activeFilter === f.value
+                    ? 'border-primary-800 bg-primary-800 text-white'
+                    : 'border-primary-900/15 bg-white text-primary-800 hover:border-primary-500 hover:bg-primary-50'
+                )}
+              >
+                <span>{f.label}</span>
+                <span className={cn(
+                  'ml-1.5 text-[10px]',
+                  activeFilter === f.value ? 'text-white/70' : 'text-primary-700/50'
+                )}>
+                  {f.value === 'all'
+                    ? GALLERY_IMAGES.length
+                    : GALLERY_IMAGES.filter(plant => plant.category === f.value).length}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-primary-900/10 pt-4 sm:flex-row sm:items-center">
+            <label className="flex flex-1 flex-col gap-1 text-[11px] font-medium text-primary-800/65">
+              Care level
+              <select
+                value={careFilter}
+                onChange={e => setCareFilter(e.target.value)}
+                className="rounded-lg border border-primary-900/15 bg-white px-3 py-2.5 text-sm text-primary-900 outline-none focus:border-primary-500"
+              >
+                <option value="all">Any care level</option>
+                {careOptions.map(option => <option key={option} value={option}>{option} care</option>)}
+              </select>
+            </label>
+            <label className="flex flex-1 flex-col gap-1 text-[11px] font-medium text-primary-800/65">
+              Light needs
+              <select
+                value={lightFilter}
+                onChange={e => setLightFilter(e.target.value)}
+                className="rounded-lg border border-primary-900/15 bg-white px-3 py-2.5 text-sm text-primary-900 outline-none focus:border-primary-500"
+              >
+                <option value="all">Any light</option>
+                {lightOptions.map(option => <option key={option} value={option}>{option}</option>)}
+              </select>
+            </label>
+            <div className="flex items-center justify-between gap-4 pt-1 text-sm text-primary-800/70 sm:min-w-36 sm:justify-end sm:pt-4">
+              <span aria-live="polite">
+                <strong className="text-primary-900">{filtered.length}</strong> of {GALLERY_IMAGES.length} plants
+              </span>
+              {hasActiveFilters && (
+                <button type="button" onClick={clearFilters} className="text-xs font-semibold text-primary-700 underline decoration-primary-300 underline-offset-4 hover:text-primary-900">
+                  Clear
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-1 justify-center bg-gray-100/60 p-1 rounded-xl">
-          {GALLERY_FILTERS.map(f => (
-            <button key={f.value} onClick={() => setActiveFilter(f.value)}
-              className={cn('px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-[13px] font-medium transition-all duration-300 ease-apple whitespace-nowrap',
-                activeFilter === f.value ? 'bg-white text-primary-900 shadow-sm' : 'text-neutral-500 hover:text-neutral-700 hover:bg-white/50')}>
-              {f.label}
-            </button>
-          ))}
-        </div>
-        <p className="text-[11px] text-neutral-400">{filtered.length} plant{filtered.length !== 1 ? 's' : ''}</p>
       </div>
 
       {/* Grid */}
@@ -108,22 +209,27 @@ export default function GalleryPage() {
         <AnimatePresence mode="popLayout">
           {filtered.map((plant, i) => (
             <motion.div key={plant.id} layout variants={cardVariants} initial="hidden" animate="visible" exit="exit" custom={i}
-              className="group bg-white rounded-xl border border-neutral-100 overflow-hidden cursor-pointer transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-lg hover:shadow-neutral-200/50"
-              onClick={() => openLightbox(plant)}>
-              <div className="relative aspect-[4/5] sm:aspect-[3/4] overflow-hidden">
+              role="article"
+              className="group bg-white rounded-2xl border border-primary-900/10 overflow-hidden transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-900/10">
+              <button
+                type="button"
+                aria-label={`View ${plant.name} photos`}
+                onClick={() => openLightbox(plant)}
+                className="relative block aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden border-0 bg-transparent p-0 text-left"
+              >
                 <LazyImage src={plant.images[0]} alt={plant.name} />
                 <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between gap-1">
                   <div className="flex gap-1 flex-wrap">
-                    <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', careColors[plant.care])}>{plant.care}</span>
-                    <span className={cn('px-1 py-0.5 rounded text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', lightColors[plant.light])}>{plant.light}</span>
+                    <span className={cn('px-1.5 py-1 rounded-md text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', careColors[plant.care])}>{plant.care} care</span>
+                    <span className={cn('px-1.5 py-1 rounded-md text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', lightColors[plant.light])}>{plant.light}</span>
                   </div>
                   {plant.petSafe && <span className="px-1 py-0.5 rounded bg-green-100/90 text-green-700 text-[9px] sm:text-[10px] font-medium border border-green-200 backdrop-blur-sm leading-none flex-shrink-0">🐾</span>}
                 </div>
                 <div className="absolute bottom-1.5 right-1.5">
                   <span className="px-1.5 py-0.5 rounded-md bg-black/30 backdrop-blur-sm text-white/80 text-[10px] font-medium">{plant.images.length} photos</span>
                 </div>
-              </div>
-              <div className="p-2.5 sm:p-3.5">
+              </button>
+              <div className="p-3 sm:p-4">
                 <h3 className="text-[13px] sm:text-sm font-semibold text-neutral-900 tracking-tight leading-tight truncate">{plant.name}</h3>
                 <p className="text-[10px] sm:text-[11px] text-neutral-400 italic mt-0.5 truncate">{plant.scientific}</p>
                 <div className="flex items-center justify-between mt-2">
@@ -138,6 +244,16 @@ export default function GalleryPage() {
           ))}
         </AnimatePresence>
       </motion.div>
+      {filtered.length === 0 && (
+        <div className="mt-4 rounded-2xl border border-dashed border-primary-900/20 bg-white/70 px-6 py-14 text-center">
+          <Search size={24} className="mx-auto mb-3 text-primary-500" aria-hidden="true" />
+          <h2 className="font-display text-2xl text-primary-900">No plants found</h2>
+          <p className="mt-2 text-sm text-primary-800/65">Try another name or adjust your filters.</p>
+          <button type="button" onClick={clearFilters} className="mt-5 rounded-full bg-primary-800 px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary-900">
+            Clear filters
+          </button>
+        </div>
+      )}
 
       <AnimatePresence>
         {toast && (
