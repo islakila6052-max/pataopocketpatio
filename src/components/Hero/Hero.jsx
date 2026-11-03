@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ArrowDown, ArrowRight, Leaf, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useBooking } from '../../context/BookingContext';
 import Button from '../ui/Button';
 
-const SLIDESHOW = [
-  'https://images.unsplash.com/photo-1604762524889-3e2fcc145683?w=1600&q=80',
-  'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?w=1600&q=80',
-  'https://images.unsplash.com/photo-1509937528035-ad76254b0356?w=1600&q=80',
-  'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=1600&q=80',
-];
+const SLIDESHOW = Object.values(
+  import.meta.glob('../../assets/bonsphoto/bonsphoto/thegarden*.jpg', {
+    eager: true,
+    import: 'default',
+  })
+);
 
 const STATS = [
   { value: 5200, suffix: '+', label: 'Visitors' },
@@ -53,19 +54,6 @@ function AnimatedStat({ value, suffix, label, delay }) {
 export default function Hero() {
   const { open: openBooking } = useBooking();
   const [bgIndex, setBgIndex] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => { setScrollY(window.scrollY); ticking = false; });
-        ticking = true;
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => setBgIndex(prev => (prev + 1) % SLIDESHOW.length), 6000);
@@ -73,52 +61,53 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative isolate flex min-h-[680px] h-[100svh] max-h-[1000px] items-center overflow-hidden">
       {SLIDESHOW.map((src, i) => (
-        <motion.div key={i} className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${src})`, transform: `translateY(${scrollY * 0.3}px) scale(1.02)` }}
+        <motion.div key={src} className="absolute inset-0 bg-cover bg-[center_55%]"
+          style={{ backgroundImage: `url(${src})` }}
           initial={{ opacity: 0 }} animate={{ opacity: i === bgIndex ? 1 : 0 }} transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }} />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/15 to-black/75 z-[1]" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/20 z-[1]" />
-      <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary-500/10 blur-[120px] z-[1]"
-        animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-[#10251d]/80 via-[#10251d]/45 to-[#10251d]/10" />
+      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-[#10251d]/55 via-transparent to-black/15" />
 
-      <motion.div className="relative z-[3] max-w-[860px] mx-auto text-center px-4 sm:px-6 pt-16 sm:pt-20 pb-14"
+      <motion.div className="container relative z-[3] w-full pt-20 pb-24 sm:pt-24"
         variants={containerVariants} initial="hidden" animate="visible">
-        <motion.div variants={fadeUp}
-          className="inline-flex items-center px-4 py-2 rounded-full bg-white/8 backdrop-blur-xl border border-white/10 text-white/90 text-xs sm:text-sm font-medium mb-6">
-          Nature Sanctuary &amp; Resort
-        </motion.div>
-        <motion.h1 variants={fadeUp}
-          className="text-[2rem] xs:text-[2.4rem] sm:text-[3rem] lg:text-[4.5rem] font-bold tracking-tight leading-[1.06] mb-4 sm:mb-5 text-white"
-          style={{ textShadow: '0 2px 50px rgba(0,0,0,0.25)' }}>
-          Escape Into <span className="relative inline-block">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-emerald-200 to-green-400">Nature&rsquo;s</span>
-            <motion.span className="absolute -bottom-1 left-0 h-[3px] bg-gradient-to-r from-green-400/50 to-emerald-300/50 rounded-full"
-              initial={{ width: 0 }} animate={{ width: '100%' }} transition={{ duration: 1, delay: 1.4, ease: [0.16, 1, 0.3, 1] }} />
-          </span><br />Hidden Paradise
-        </motion.h1>
-        <motion.p variants={fadeUp}
-          className="text-sm sm:text-base lg:text-lg font-light text-white/70 max-w-[520px] mx-auto mb-6 sm:mb-8 leading-relaxed">
-          Discover breathtaking botanical gardens, relaxing resort pools, peaceful patios, and unforgettable moments surrounded by nature.
-        </motion.p>
-        <motion.div variants={fadeUp} className="flex justify-center">
-          <button onClick={openBooking}>
-            <Button variant="outline-light" size="lg" className="!border-white/30 !text-white hover:!bg-white/8 !backdrop-blur-sm !px-10">Book Your Visit</Button>
-          </button>
-        </motion.div>
-        <motion.div variants={fadeUp} className="flex justify-center gap-8 sm:gap-12 mt-8 sm:mt-10">
-          {STATS.map((s, i) => <AnimatedStat key={s.label} {...s} delay={1800 + i * 200} />)}
+        <motion.div variants={fadeUp} className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-white/85 mb-6">
+            <Leaf size={15} strokeWidth={1.7} className="text-emerald-200" />
+            <span>Botanical garden &amp; nature resort</span>
+          </div>
+          <h1 className="font-display text-[3.4rem] xs:text-[4rem] sm:text-6xl lg:text-8xl leading-[0.98] tracking-[-0.04em] text-white text-balance mb-6">
+            Escape into <span className="italic text-[#d7e5b3]">nature&rsquo;s</span> hidden paradise.
+          </h1>
+          <p className="max-w-xl text-sm sm:text-base lg:text-lg font-light text-white/85 leading-relaxed mb-8 sm:mb-10">
+            Wander through a garden sanctuary, slow down among tropical greenery, and make room for a little more nature in your day.
+          </p>
+          <div className="flex flex-col xs:flex-row items-start xs:items-center gap-3">
+            <Button onClick={openBooking} size="lg" className="!px-7 !py-3.5 !bg-[#e7edcf] !border-[#e7edcf] !text-[#173b2a] hover:!bg-white hover:!border-white">
+              Plan your visit <ArrowRight size={16} className="ml-2" />
+            </Button>
+            <Link to="/gallery" className="inline-flex items-center gap-2 rounded-full border border-white/45 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white/10">
+              Explore our plants
+            </Link>
+          </div>
         </motion.div>
       </motion.div>
 
-      <motion.div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-[3]"
-        initial={{ opacity: 0 }} animate={{ opacity: 0.5 }} transition={{ delay: 2.5, duration: 0.6 }}>
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} className="text-white/50">
-          <ChevronDown size={26} strokeWidth={1.5} />
-        </motion.div>
-      </motion.div>
+      <div className="absolute bottom-0 left-0 right-0 z-[3] border-t border-white/20 bg-[#10251d]/25 backdrop-blur-sm">
+        <div className="container flex items-center justify-between gap-6 py-4 sm:py-5">
+          <div className="hidden sm:flex items-center gap-2 text-xs tracking-wide text-white/75">
+            <MapPin size={14} className="text-[#d7e5b3]" />
+            A little more nature, a little less hurry
+          </div>
+          <div className="ml-auto flex gap-7 sm:gap-10">
+            {STATS.map((s, i) => <AnimatedStat key={s.label} {...s} delay={800 + i * 150} />)}
+          </div>
+          <a href="#about" className="hidden sm:flex items-center gap-2 text-xs font-medium text-white/75 hover:text-white transition-colors">
+            Discover the sanctuary <ArrowDown size={14} />
+          </a>
+        </div>
+      </div>
     </section>
   );
 }

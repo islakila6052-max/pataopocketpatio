@@ -48,28 +48,35 @@ export default function Navbar() {
 
   return (
     <nav className={cn('fixed top-0 left-0 w-full z-[1000] transition-all duration-300 ease-apple',
-      scrolled || isGalleryPage ? 'bg-white/85 backdrop-blur-xl border-b border-black/5 py-2.5' : 'bg-transparent py-3.5')}>
-      <div className="container flex items-center justify-between">
-        <Link to="/" className={cn('flex items-center gap-2 text-base sm:text-lg font-bold tracking-tight transition-colors duration-200',
-          scrolled || isGalleryPage ? 'text-primary-900' : 'text-white')}>
-          <Leaf size={22} strokeWidth={1.8} className={cn('transition-colors', scrolled || isGalleryPage ? 'text-primary-600' : 'text-white')} />
-          <span>Patao Pocket Patio &amp; PS</span>
+      scrolled || isGalleryPage || mobileOpen ? 'bg-[#faf9f3]/95 backdrop-blur-xl border-b border-primary-900/10 py-2.5' : 'bg-transparent py-3.5')}>
+      <div className="container !overflow-visible relative flex items-center justify-between">
+        <Link to="/" className={cn('flex items-center gap-2.5 transition-colors duration-200',
+          scrolled || isGalleryPage || mobileOpen ? 'text-primary-900' : 'text-white')}>
+          <span className={cn('flex h-10 w-10 items-center justify-center rounded-full border transition-colors',
+            scrolled || isGalleryPage || mobileOpen ? 'border-primary-900/10 bg-primary-50 text-primary-700' : 'border-white/25 bg-white/10 text-white')}>
+            <Leaf size={20} strokeWidth={1.8} />
+          </span>
+          <span>
+            <span className="block text-sm sm:text-base font-semibold tracking-tight">Patao Pocket Patio</span>
+            <span className={cn('hidden sm:block text-[9px] uppercase tracking-[0.2em]',
+              scrolled || isGalleryPage || mobileOpen ? 'text-primary-700/60' : 'text-white/70')}>Botanical garden &amp; resort</span>
+          </span>
         </Link>
 
         <button className="flex flex-col gap-1.5 bg-transparent border-none cursor-pointer p-1 md:hidden"
           onClick={() => setMobileOpen(prev => !prev)} aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen}>
-          {mobileOpen ? <X size={24} strokeWidth={2} className={scrolled || isGalleryPage ? 'text-primary-900' : 'text-white'} /> : <>
-            <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled || isGalleryPage ? 'bg-primary-900' : 'bg-white')} />
-            <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled || isGalleryPage ? 'bg-primary-900' : 'bg-white')} />
-            <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled || isGalleryPage ? 'bg-primary-900' : 'bg-white')} />
+          {mobileOpen ? <X size={23} strokeWidth={1.8} className={scrolled || isGalleryPage || mobileOpen ? 'text-primary-900' : 'text-white'} /> : <>
+            <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled || isGalleryPage || mobileOpen ? 'bg-primary-900' : 'bg-white')} />
+            <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled || isGalleryPage || mobileOpen ? 'bg-primary-900' : 'bg-white')} />
+            <span className={cn('block w-6 h-0.5 rounded transition-colors', scrolled || isGalleryPage || mobileOpen ? 'bg-primary-900' : 'bg-white')} />
           </>}
         </button>
 
         <ul className={cn('flex gap-6 items-center list-none font-medium text-sm max-md:hidden',
-          mobileOpen && '!flex flex-col w-full bg-white shadow-xl rounded-xl mt-2 p-2 gap-0 border border-black/5 overflow-hidden')}>
+          mobileOpen && '!flex absolute top-[calc(100%+0.5rem)] left-4 right-4 flex-col gap-1 rounded-2xl border border-primary-900/10 bg-[#faf9f3] p-2 shadow-xl md:hidden')}>
           {NAV_LINKS.map((link) => {
             const isActive = link.href === '/gallery' ? isGalleryPage : false;
-            const darkMode = scrolled || isGalleryPage;
+            const darkMode = scrolled || isGalleryPage || mobileOpen;
             return (
               <li key={link.href} className={mobileOpen ? 'w-full' : ''}>
                 {link.href === '/gallery' ? (

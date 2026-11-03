@@ -12,7 +12,7 @@ export default function Button({
   ...props
 }) {
   const base =
-    'inline-flex items-center justify-center font-semibold rounded-lg border transition-all duration-200 ease-apple cursor-pointer tracking-tight active:scale-[0.97]';
+    'inline-flex items-center justify-center font-semibold rounded-full border transition-all duration-200 ease-apple cursor-pointer tracking-tight active:scale-[0.97]';
 
   const variants = {
     primary:
