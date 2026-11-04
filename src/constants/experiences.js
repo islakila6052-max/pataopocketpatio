@@ -4,7 +4,6 @@ import {
   Footprints,
   Lightbulb,
   Mic2,
-  Sun,
   UtensilsCrossed,
   Waves,
 } from 'lucide-react';
@@ -25,14 +24,6 @@ export const EXPERIENCES = [
     description: 'Relax in crystal-clear water surrounded by tropical greenery.',
     image:
       'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=600&q=80',
-  },
-  {
-    id: 4,
-    icon: Sun,
-    title: 'Patio Lounge',
-    description: 'Unwind during golden hour at our sunset relaxation area.',
-    image:
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',
   },
   {
     id: 6,

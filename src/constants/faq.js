@@ -7,12 +7,16 @@ export const FAQ_ITEMS = [
   {
     id: 2,
     question: 'Is the botanical garden family-friendly?',
-    answer: 'Absolutely! We have activities for all ages.',
+    answer: 'Yes, it is a welcoming place for families to explore and enjoy nature together.',
   },
   {
     id: 3,
-    question: 'Can I book a private event?',
-    answer:
-      'Yes, contact us for weddings, birthdays, and corporate events.',
+    question: 'What can I see in the garden?',
+    answer: 'Explore tropical plants, take a botanical walk, and browse plants to bring home.',
+  },
+  {
+    id: 4,
+    question: 'Is there a swimming pool?',
+    answer: 'A swimming pool is featured among our garden experiences. Please contact us to confirm current access before your visit.',
   },
 ];
