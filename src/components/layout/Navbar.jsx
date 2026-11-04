@@ -8,7 +8,6 @@ import { cn } from '../../utils/helpers';
 const NAV_LINKS = [
   { href: '/#about', label: 'About' },
   { href: '/gallery', label: 'Gallery' },
-  { href: '/#resort', label: 'Resort' },
   { href: '/#experiences', label: 'Experiences' },
   { href: '/#contact', label: 'Contact' },
 ];
@@ -59,7 +58,7 @@ export default function Navbar() {
           <span>
             <span className="block text-sm sm:text-base font-semibold tracking-tight">Patao Pocket Patio</span>
             <span className={cn('hidden sm:block text-[9px] uppercase tracking-[0.2em]',
-              scrolled || isGalleryPage || mobileOpen ? 'text-primary-700/60' : 'text-white/70')}>Botanical garden &amp; resort</span>
+              scrolled || isGalleryPage || mobileOpen ? 'text-primary-700/60' : 'text-white/70')}>Botanical garden &amp; plant shop</span>
           </span>
         </Link>
 

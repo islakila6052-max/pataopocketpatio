@@ -9,7 +9,7 @@ const structuredData = {
   '@type': 'TouristAttraction',
   name: 'Patao Pocket Patio & PS',
   description:
-    'A peaceful eco-friendly nature destination with botanical gardens, resort pools, and unforgettable moments surrounded by nature.',
+    'A peaceful botanical garden and plant shop with tropical plants, garden BBQ and dining, karaoke, and night lights.',
   url: SITE_URL,
   image: OG_IMAGE,
   address: {
@@ -33,9 +33,11 @@ const structuredData = {
   },
   amenityFeature: [
     { '@type': 'LocationFeatureSpecification', name: 'Botanical Garden', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Swimming Pool', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Garden Café', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Resort Rooms', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Plant Shop', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Garden BBQ and Dining', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Cold Drinks', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Karaoke', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Garden Night Lights', value: true },
     { '@type': 'LocationFeatureSpecification', name: 'Photography Spot', value: true },
   ],
 };
@@ -43,9 +45,9 @@ const structuredData = {
 export default function SEO() {
   return (
     <Helmet>
-      <title>Patao Pocket Patio & PS — Nature Resort & Botanical Garden</title>
-      <meta name="description" content="Escape into nature at Patao Pocket Patio & PS. Botanical gardens, resort pools, garden café, nature trails, and unforgettable moments in a tropical paradise." />
-      <meta name="keywords" content="botanical garden, nature resort, plant sanctuary, swimming pool, garden café, nature trail, patao pocket, eco tourism, tropical garden, weekend getaway, photography spot, outdoor dining" />
+      <title>Patao Pocket Patio & PS — Botanical Garden & Plant Shop</title>
+      <meta name="description" content="Visit Patao Pocket Patio & PS for tropical plants, garden BBQ and dining, karaoke, night lights, and refreshing drinks." />
+      <meta name="keywords" content="botanical garden, plant shop, tropical plants, barbecue, garden dining, beer for adults, karaoke, garden night lights, patao pocket" />
       <meta name="author" content="Patao Pocket Patio & PS" />
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow" />
@@ -53,8 +55,8 @@ export default function SEO() {
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={SITE_URL} />
-      <meta property="og:title" content="Patao Pocket Patio & PS — Nature Resort & Botanical Garden" />
-      <meta property="og:description" content="Discover breathtaking botanical gardens, relaxing resort pools, peaceful patios, and unforgettable moments surrounded by nature." />
+      <meta property="og:title" content="Patao Pocket Patio & PS — Botanical Garden & Plant Shop" />
+      <meta property="og:description" content="Discover tropical plants, garden BBQ and dining, karaoke, night lights, and refreshing drinks at Patao Pocket Patio & PS." />
       <meta property="og:image" content={OG_IMAGE} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
@@ -63,8 +65,8 @@ export default function SEO() {
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={SITE_URL} />
-      <meta name="twitter:title" content="Patao Pocket Patio & PS — Nature Resort & Botanical Garden" />
-      <meta name="twitter:description" content="Discover breathtaking botanical gardens, relaxing resort pools, peaceful patios, and unforgettable moments surrounded by nature." />
+      <meta name="twitter:title" content="Patao Pocket Patio & PS — Botanical Garden & Plant Shop" />
+      <meta name="twitter:description" content="Discover tropical plants, garden BBQ and dining, karaoke, night lights, and refreshing drinks at Patao Pocket Patio & PS." />
       <meta name="twitter:image" content={OG_IMAGE} />
 
       <script type="application/ld+json">{JSON.stringify(structuredData)}</script>

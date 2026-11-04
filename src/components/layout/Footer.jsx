@@ -10,7 +10,6 @@ const footerLinks = [
   { label: 'About the sanctuary', href: '#about' },
   { label: 'Plant collection', href: '/gallery' },
   { label: 'Experiences', href: '#experiences' },
-  { label: 'Resort', href: '#resort' },
   { label: 'Contact us', href: '#contact' },
 ];
 

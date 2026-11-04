@@ -34,7 +34,7 @@ export default function LoadingScreen({ onFinish }) {
         Patao Pocket Patio &amp; PS
       </h1>
       <p className="text-white/40 text-sm font-light">
-        Nature Sanctuary &amp; Resort
+        Botanical Garden &amp; Plant Shop
       </p>
       <div className="mt-8 w-48 h-1 rounded-full bg-white/10 overflow-hidden">
         <div className="h-full w-full bg-primary-400 rounded-full animate-[loadingBar_1.5s_ease-in-out]" />

@@ -2,7 +2,7 @@ import {
   Leaf,
   Waves,
   Camera,
-  Coffee,
+  ShoppingBag,
 } from 'lucide-react';
 
 export const FEATURES = [
@@ -15,8 +15,8 @@ export const FEATURES = [
   {
     id: 2,
     icon: Waves,
-    title: 'Resort Pool',
-    description: 'A tropical infinity pool with panoramic nature views.',
+    title: 'Garden Pool',
+    description: 'Cool off and relax amid lush tropical greenery.',
   },
   {
     id: 3,
@@ -26,9 +26,9 @@ export const FEATURES = [
   },
   {
     id: 4,
-    icon: Coffee,
-    title: 'Garden Café',
-    description: 'Organic, farm-to-table refreshments in a serene setting.',
+    icon: ShoppingBag,
+    title: 'Plant Shop',
+    description: 'Browse tropical plants and find a new favorite to take home.',
   },
 ];
 

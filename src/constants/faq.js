@@ -6,7 +6,7 @@ export const FAQ_ITEMS = [
   },
   {
     id: 2,
-    question: 'Is the resort family-friendly?',
+    question: 'Is the botanical garden family-friendly?',
     answer: 'Absolutely! We have activities for all ages.',
   },
   {

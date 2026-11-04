@@ -7,12 +7,12 @@ import Modal from '../components/ui/Modal';
 import { cn } from '../utils/helpers';
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 14, scale: 0.985 },
   visible: (i) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.4, delay: i * 0.03, ease: [0.16, 1, 0.3, 1] },
+    opacity: 1, y: 0, scale: 1,
+    transition: { duration: 0.34, delay: Math.min(i * 0.018, 0.18), ease: [0.16, 1, 0.3, 1] },
   }),
-  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
+  exit: { opacity: 0, y: -5, scale: 0.985, transition: { duration: 0.16, ease: 'easeIn' } },
 };
 
 const careColors = {

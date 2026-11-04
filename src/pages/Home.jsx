@@ -3,7 +3,6 @@ import Hero from '../components/Hero/Hero';
 import GalleryPreview from '../components/GalleryPreview';
 import About from '../components/About/About';
 import Experiences from '../components/Experiences/Experiences';
-import Resort from '../components/Resort/Resort';
 import Statistics from '../components/Statistics/Statistics';
 import Testimonials from '../components/Testimonials/Testimonials';
 import FAQ from '../components/FAQ/FAQ';
@@ -17,7 +16,6 @@ export default function Home() {
       <About />
       <GalleryPreview />
       <Experiences />
-      <Resort />
       <Statistics />
       <Testimonials />
       <FAQ />

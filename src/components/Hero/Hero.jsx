@@ -15,7 +15,6 @@ const SLIDESHOW = Object.values(
 const STATS = [
   { value: 5200, suffix: '+', label: 'Visitors' },
   { value: 680, suffix: '+', label: 'Species' },
-  { value: 14, suffix: '', label: 'Rooms' },
 ];
 
 const containerVariants = {
@@ -75,7 +74,7 @@ export default function Hero() {
         <motion.div variants={fadeUp} className="max-w-3xl">
           <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-white/85 mb-6">
             <Leaf size={15} strokeWidth={1.7} className="text-emerald-200" />
-            <span>Botanical garden &amp; nature resort</span>
+            <span>Botanical garden &amp; plant shop</span>
           </div>
           <h1 className="font-display text-[3.4rem] xs:text-[4rem] sm:text-6xl lg:text-8xl leading-[0.98] tracking-[-0.04em] text-white text-balance mb-6">
             Escape into <span className="italic text-[#d7e5b3]">nature&rsquo;s</span> hidden paradise.

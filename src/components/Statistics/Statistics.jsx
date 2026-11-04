@@ -34,7 +34,7 @@ export default function Statistics() {
     <section className="container section-padding">
       <div
         ref={ref}
-        className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center"
+        className="grid grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center"
       >
         {STATISTICS.map((stat) => (
           <CounterCard

@@ -59,7 +59,7 @@ export default function About() {
         </BlurReveal>
 
         <div>
-          <SectionTitle subtitle="A peaceful, eco-friendly nature destination for families and weekend getaways. Immerse yourself in the beauty of botanical gardens and resort living.">
+          <SectionTitle subtitle="Explore a peaceful botanical garden, discover tropical plants, and find new favorites to bring home.">
             About the Sanctuary
           </SectionTitle>
 

@@ -8,13 +8,13 @@ export const TESTIMONIALS = [
   {
     id: 2,
     rating: 5,
-    text: 'Peaceful, luxurious, and surrounded by nature. We\'ll be back.',
+    text: 'A peaceful place to enjoy the garden and discover new plants.',
     author: 'James',
   },
   {
     id: 3,
     rating: 5,
-    text: 'The pool and garden café made our weekend perfect.',
+    text: 'Beautiful plants and a lovely atmosphere for a garden visit.',
     author: 'Lisa',
   },
 ];

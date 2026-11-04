@@ -2,7 +2,6 @@ export const NAV_LINKS = [
   { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#gallery', label: 'Gallery' },
-  { href: '#resort', label: 'Resort' },
   { href: '#experiences', label: 'Experiences' },
   { href: '#visit', label: 'Visit' },
   { href: '#contact', label: 'Contact' },
