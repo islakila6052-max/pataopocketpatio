@@ -103,7 +103,7 @@ export default function Gallery() {
         </p>
       </div>
 
-      <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+      <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5">
         <AnimatePresence mode="popLayout">
           {filtered.map((plant, i) => (
             <motion.div key={plant.id} layout variants={cardVariants} initial="hidden" animate="visible" exit="exit" custom={i}
