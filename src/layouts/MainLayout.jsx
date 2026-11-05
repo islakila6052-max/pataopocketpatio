@@ -8,11 +8,23 @@ import Navbar from '../components/layout/Navbar';
 import BookingModal from '../components/Booking/BookingModal';
 
 export default function MainLayout() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    const frame = requestAnimationFrame(() => {
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (!target) return;
+      const top = target.getBoundingClientRect().top + window.scrollY - 88;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [pathname, hash]);
 
   return (
     <motion.div

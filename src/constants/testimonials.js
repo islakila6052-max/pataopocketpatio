@@ -2,19 +2,19 @@ export const TESTIMONIALS = [
   {
     id: 1,
     rating: 5,
-    text: 'A hidden paradise! The botanical garden is breathtaking.',
-    author: 'Maria',
+    text: "Lami kaayo ang ilang icecream ug ang ilang mga tanom kay nindot kaayo. Highly recommended!",
+    author: "Sofia",
   },
   {
     id: 2,
     rating: 5,
-    text: 'A peaceful place to enjoy the garden and discover new plants.',
-    author: 'James',
+    text: "A peaceful place to enjoy the garden and discover new plants.",
+    author: "James",
   },
   {
     id: 3,
     rating: 5,
-    text: 'Beautiful plants and a lovely atmosphere for a garden visit.',
-    author: 'Lisa',
+    text: "Nice jud kaayo ang garden, daghan kaayo ug plants nga makita.",
+    author: "Maico",
   },
 ];

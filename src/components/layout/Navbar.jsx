@@ -6,10 +6,10 @@ import Button from '../ui/Button';
 import { cn } from '../../utils/helpers';
 
 const NAV_LINKS = [
-  { href: '/#about', label: 'About' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/#experiences', label: 'Experiences' },
-  { href: '/#contact', label: 'Contact' },
+  { to: '/#about', label: 'About' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/#experiences', label: 'Experiences' },
+  { to: '/#contact', label: 'Contact' },
 ];
 
 export default function Navbar() {
@@ -34,16 +34,6 @@ export default function Navbar() {
   }, []);
 
   const isGalleryPage = location.pathname === '/gallery';
-
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    setMobileOpen(false);
-    if (href.startsWith('/#')) {
-      const id = href.replace('/#', '#');
-      const target = document.querySelector(id);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <nav className={cn('fixed top-0 left-0 w-full z-[1000] transition-all duration-300 ease-apple',
@@ -74,29 +64,18 @@ export default function Navbar() {
         <ul className={cn('flex gap-6 items-center list-none font-medium text-sm max-md:hidden',
           mobileOpen && '!flex absolute top-[calc(100%+0.5rem)] left-4 right-4 flex-col gap-1 rounded-2xl border border-primary-900/10 bg-[#faf9f3] p-2 shadow-xl md:hidden')}>
           {NAV_LINKS.map((link) => {
-            const isActive = link.href === '/gallery' ? isGalleryPage : false;
+            const isActive = link.to === '/gallery' ? isGalleryPage : false;
             const darkMode = scrolled || isGalleryPage || mobileOpen;
             return (
-              <li key={link.href} className={mobileOpen ? 'w-full' : ''}>
-                {link.href === '/gallery' ? (
-                  <Link to={link.href} onClick={() => setMobileOpen(false)}
-                    className={mobileOpen
-                      ? `block w-full px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${isActive ? 'text-primary-700 bg-primary-50' : 'text-neutral-700 hover:text-primary-700 hover:bg-primary-50'}`
-                      : cn('relative text-[13px] font-medium transition-colors duration-200',
-                        'after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-primary-500 after:transition-all after:duration-300 after:ease-apple',
-                        isActive ? 'text-primary-700 after:w-full' : `${darkMode ? 'text-primary-800' : 'text-white/90'} after:w-0 hover:after:w-full`)}>
-                    {link.label}
-                  </Link>
-                ) : (
-                  <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}
-                    className={mobileOpen
-                      ? 'block w-full px-4 py-3 text-sm font-medium text-neutral-700 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors duration-150'
-                      : cn('relative text-[13px] font-medium transition-colors duration-200',
-                        'after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-primary-500 after:transition-all after:duration-300 after:ease-apple after:w-0 hover:after:w-full',
-                        darkMode ? 'text-primary-800' : 'text-white/90')}>
-                    {link.label}
-                  </a>
-                )}
+              <li key={link.to} className={mobileOpen ? 'w-full' : ''}>
+                <Link to={link.to} onClick={() => setMobileOpen(false)}
+                  className={mobileOpen
+                    ? `block w-full px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-150 ${isActive ? 'text-primary-700 bg-primary-50' : 'text-neutral-700 hover:text-primary-700 hover:bg-primary-50'}`
+                    : cn('relative text-[13px] font-medium transition-colors duration-200',
+                      'after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:bg-primary-500 after:transition-all after:duration-300 after:ease-apple',
+                      isActive ? 'text-primary-700 after:w-full' : `${darkMode ? 'text-primary-800' : 'text-white/90'} after:w-0 hover:after:w-full`)}>
+                  {link.label}
+                </Link>
               </li>
             );
           })}

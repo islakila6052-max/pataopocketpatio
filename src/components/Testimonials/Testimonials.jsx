@@ -70,10 +70,11 @@ export default function Testimonials() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {TESTIMONIALS.map((item) => (
+          {TESTIMONIALS.map((item, index) => (
             <div
               key={item.id}
-              className="w-[80vw] max-w-[380px] sm:w-auto sm:min-w-[340px] flex-shrink-0 snap-center bg-white rounded-xl p-5 sm:p-6 border border-black/5 shadow-card transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-card-hover"
+              aria-current={index === current ? 'true' : undefined}
+              className={`w-[80vw] max-w-[380px] sm:w-auto sm:min-w-[340px] flex-shrink-0 snap-center bg-white rounded-xl p-5 sm:p-6 border border-black/5 shadow-card ${index === current ? 'opacity-100' : 'opacity-75'} transition-all duration-300 ease-apple motion-reduce:transition-none hover:-translate-y-1 hover:shadow-card-hover`}
             >
               <div className="flex gap-0.5 mb-3">
                 {Array.from({ length: item.rating }).map((_, i) => (
