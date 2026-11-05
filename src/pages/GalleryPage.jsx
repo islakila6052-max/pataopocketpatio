@@ -6,14 +6,8 @@ import SectionTitle from '../components/ui/SectionTitle';
 import Modal from '../components/ui/Modal';
 import { cn } from '../utils/helpers';
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 14, scale: 0.985 },
-  visible: (i) => ({
-    opacity: 1, y: 0, scale: 1,
-    transition: { duration: 0.34, delay: Math.min(i * 0.018, 0.18), ease: [0.16, 1, 0.3, 1] },
-  }),
-  exit: { opacity: 0, y: -5, scale: 0.985, transition: { duration: 0.16, ease: 'easeIn' } },
-};
+const INITIAL_GALLERY_BATCH_SIZE = 10;
+const FILTER_LOADING_DELAY = 250;
 
 const careColors = {
   'Easy': 'bg-emerald-50 text-emerald-700 border-emerald-200',
@@ -25,26 +19,24 @@ const lightColors = {
   'Bright Light': 'bg-yellow-50 text-yellow-700 border-yellow-200',
 };
 
-function LazyImage({ src, alt }) {
-  const [loaded, setLoaded] = useState(false);
+function LazyImage({ src, alt, imageId, onReady, eager }) {
   const imgRef = useRef(null);
   useEffect(() => {
     const img = imgRef.current;
     if (!img) return;
-    if (img.complete) { setLoaded(true); return; }
-    const onLoad = () => setLoaded(true);
-    img.addEventListener('load', onLoad);
-    return () => img.removeEventListener('load', onLoad);
-  }, [src]);
+    const markReady = () => onReady(imageId);
+    if (img.complete) { markReady(); return; }
+    img.addEventListener('load', markReady);
+    img.addEventListener('error', markReady);
+    return () => {
+      img.removeEventListener('load', markReady);
+      img.removeEventListener('error', markReady);
+    };
+  }, [imageId, onReady, src]);
   return (
     <div className="relative w-full h-full bg-primary-50/30">
-      {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-8 h-8 rounded-full border-2 border-primary-200 border-t-primary-500 animate-spin" />
-        </div>
-      )}
-      <img ref={imgRef} src={src} alt={alt} loading="lazy" decoding="async"
-        className={cn('w-full h-full object-cover object-center transition-all duration-500 ease-apple', loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95')} />
+      <img ref={imgRef} src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async"
+        className="w-full h-full object-cover object-center" />
     </div>
   );
 }
@@ -57,6 +49,9 @@ export default function GalleryPage() {
   const [petFriendlyOnly, setPetFriendlyOnly] = useState(false);
   const [lightbox, setLightbox] = useState(null);
   const [toast, setToast] = useState(null);
+  const [readyImageIds, setReadyImageIds] = useState(() => new Set());
+  const [isFiltering, setIsFiltering] = useState(false);
+  const hasMountedFilters = useRef(false);
 
   const careOptions = useMemo(() => [...new Set(GALLERY_IMAGES.map(plant => plant.care))], []);
   const lightOptions = useMemo(() => [...new Set(GALLERY_IMAGES.map(plant => plant.light))], []);
@@ -72,6 +67,28 @@ export default function GalleryPage() {
       && (!query || `${plant.name} ${plant.scientific}`.toLowerCase().includes(query))
     ));
   }, [activeFilter, careFilter, lightFilter, petFriendlyOnly, search]);
+  const initialBatch = filtered.slice(0, INITIAL_GALLERY_BATCH_SIZE);
+  const isGalleryLoading = initialBatch.some(plant => !readyImageIds.has(plant.id));
+  useEffect(() => {
+    if (!hasMountedFilters.current) {
+      hasMountedFilters.current = true;
+      return;
+    }
+
+    setIsFiltering(true);
+    const timer = setTimeout(() => setIsFiltering(false), FILTER_LOADING_DELAY);
+    return () => clearTimeout(timer);
+  }, [activeFilter, careFilter, lightFilter, petFriendlyOnly, search]);
+
+  const showGalleryLoading = isFiltering || isGalleryLoading;
+  const markImageReady = useCallback((id) => {
+    setReadyImageIds(previous => {
+      if (previous.has(id)) return previous;
+      const next = new Set(previous);
+      next.add(id);
+      return next;
+    });
+  }, []);
 
   const clearFilters = () => {
     setActiveFilter('all');
@@ -121,7 +138,7 @@ export default function GalleryPage() {
                 placeholder="Search common or scientific name"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full rounded-xl border border-primary-900/15 bg-[#fbfaf6] py-3 pl-11 pr-4 text-sm text-primary-900 outline-none transition placeholder:text-primary-800/45 focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                className="w-full rounded-xl border border-primary-900/15 bg-[#fbfaf6] py-3 pl-11 pr-4 text-sm text-primary-900 outline-none placeholder:text-primary-800/45 focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
               />
             </label>
             <label className="flex min-h-11 items-center gap-2 rounded-xl border border-primary-900/15 bg-[#fbfaf6] px-4 text-sm text-primary-800">
@@ -148,7 +165,7 @@ export default function GalleryPage() {
                 onClick={() => setActiveFilter(f.value)}
                 aria-pressed={activeFilter === f.value}
                 className={cn(
-                  'shrink-0 rounded-full border px-4 py-2 text-xs font-medium transition-colors',
+                  'shrink-0 rounded-full border px-4 py-2 text-xs font-medium',
                   activeFilter === f.value
                     ? 'border-primary-800 bg-primary-800 text-white'
                     : 'border-primary-900/15 bg-white text-primary-800 hover:border-primary-500 hover:bg-primary-50'
@@ -205,19 +222,24 @@ export default function GalleryPage() {
       </div>
 
       {/* Grid */}
-      <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 content-auto">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((plant, i) => (
-            <motion.div key={plant.id} layout variants={cardVariants} initial="hidden" animate="visible" exit="exit" custom={i}
-              role="article"
-              className="group bg-white rounded-2xl border border-primary-900/10 overflow-hidden transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-900/10">
+      <div aria-busy={showGalleryLoading}
+        className="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 content-auto">
+        {filtered.map((plant, i) => (
+            <article key={plant.id}
+              className="group overflow-hidden rounded-2xl border border-primary-900/10 bg-white">
               <button
                 type="button"
                 aria-label={`View ${plant.name} photos`}
                 onClick={() => openLightbox(plant)}
                 className="relative block aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden border-0 bg-transparent p-0 text-left"
               >
-                <LazyImage src={plant.images[0]} alt={plant.name} />
+                <LazyImage
+                  src={plant.images[0]}
+                  alt={plant.name}
+                  imageId={plant.id}
+                  eager={i < INITIAL_GALLERY_BATCH_SIZE}
+                  onReady={markImageReady}
+                />
                 <div className="absolute top-1.5 left-1.5 right-1.5 flex items-start justify-between gap-1">
                   <div className="flex gap-1 flex-wrap">
                     <span className={cn('px-1.5 py-1 rounded-md text-[9px] sm:text-[10px] font-medium border backdrop-blur-sm leading-none', careColors[plant.care])}>{plant.care} care</span>
@@ -235,15 +257,23 @@ export default function GalleryPage() {
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-[13px] sm:text-sm font-bold text-primary-700">{plant.price}</span>
                   <button onClick={(e) => handleInquire(e, plant)}
-                    className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium text-white bg-primary-700 hover:bg-primary-800 px-2.5 sm:px-3 py-1.5 rounded-lg transition-all duration-200 ease-apple active:scale-95 cursor-pointer border-none">
+                    className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-medium text-white bg-primary-700 hover:bg-primary-800 px-2.5 sm:px-3 py-1.5 rounded-lg cursor-pointer border-none">
                     <ShoppingBag size={11} strokeWidth={2} /><span className="hidden xs:inline">Inquire</span>
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </article>
           ))}
-        </AnimatePresence>
-      </motion.div>
+        {showGalleryLoading && (
+          <div role="status" aria-live="polite"
+            className="absolute inset-0 z-10 flex items-start justify-center rounded-2xl bg-[#fbfaf6] pt-12 text-sm font-medium text-primary-800">
+            <span className="flex items-center gap-3 rounded-full bg-white px-5 py-3 shadow-sm">
+              <span className="h-5 w-5 animate-spin rounded-full border-2 border-primary-200 border-t-primary-700" />
+              {isFiltering ? 'Updating plant collection...' : 'Loading plant collection...'}
+            </span>
+          </div>
+        )}
+      </div>
       {filtered.length === 0 && (
         <div className="mt-4 rounded-2xl border border-dashed border-primary-900/20 bg-white/70 px-6 py-14 text-center">
           <Search size={24} className="mx-auto mb-3 text-primary-500" aria-hidden="true" />
