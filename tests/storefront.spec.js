@@ -26,29 +26,12 @@ const mockSupabaseInsert = async (page, responseForTable = () => ({ status: 201,
 
 const openStorefront = (page) => page.goto('/', { waitUntil: 'domcontentloaded' });
 
-test('shows a brief loading overlay without the top scroll-progress line', async ({ page }) => {
-  await page.addInitScript(() => {
-    window.__loadingScreenAudit = null;
-    const observer = new MutationObserver(() => {
-      const loader = document.querySelector('[aria-label="Loading Patao Pocket Patio"]');
-      if (!loader) return;
+test('renders the storefront without a blocking startup overlay', async ({ page }) => {
+  await openStorefront(page);
 
-      window.__loadingScreenAudit = {
-        progressBarCount: document.querySelectorAll('.scroll-progress-bar').length,
-        indicatorWidth: loader.querySelector('[data-testid="loading-indicator"]').getBoundingClientRect().width,
-        trackWidth: loader.querySelector('[data-testid="loading-track"]').getBoundingClientRect().width,
-      };
-    });
-    observer.observe(document, { childList: true, subtree: true });
-  });
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  const loader = page.locator('[aria-label="Loading Patao Pocket Patio"]');
-  const audit = await page.evaluate(() => window.__loadingScreenAudit);
-  expect(audit).not.toBeNull();
-  expect(audit.progressBarCount).toBe(0);
-  expect(audit.indicatorWidth).toBeLessThan(audit.trackWidth);
-  await expect(loader).toBeHidden({ timeout: 1500 });
+  await expect(page.locator('#home h1')).toBeVisible();
+  await expect(page.locator('[aria-label="Loading Patao Pocket Patio"]')).toHaveCount(0);
+  await expect(page.locator('.scroll-progress-bar')).toHaveCount(1);
 });
 
 test('navigates to the plant gallery, filters cards, and returns to a home section', async ({ page }) => {
