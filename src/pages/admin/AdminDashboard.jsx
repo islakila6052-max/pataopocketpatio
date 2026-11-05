@@ -46,38 +46,68 @@ export default function AdminDashboard({ onLogout }) {
   const [messages, setMessages] = useState([]);
   const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [fetchError, setFetchError] = useState('');
+  const [actionError, setActionError] = useState('');
+  const [logoutError, setLogoutError] = useState('');
   const [search, setSearch] = useState('');
   const [copied, setCopied] = useState(null);
 
-  const copyEmail = (email) => {
-    navigator.clipboard.writeText(email);
-    setCopied(email);
-    setTimeout(() => setCopied(null), 2000);
+  const copyEmail = async (email) => {
+    setActionError('');
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(email);
+      setTimeout(() => setCopied(null), 2000);
+    } catch {
+      setActionError('Could not copy this address. Please copy it manually.');
+    }
   };
 
   const fetchData = useCallback(async () => {
     setLoading(true);
+    setFetchError('');
     try {
       if (activeTab === 'bookings') {
-        const { data } = await supabase.from('booking_inquiries').select('*').order('created_at', { ascending: false });
+        const { data, error } = await supabase.from('booking_inquiries').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
         setBookings(data || []);
       } else if (activeTab === 'messages') {
-        const { data } = await supabase.from('contact_messages').select('*').order('created_at', { ascending: false });
+        const { data, error } = await supabase.from('contact_messages').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
         setMessages(data || []);
       } else if (activeTab === 'newsletter') {
-        const { data } = await supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false });
+        const { data, error } = await supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
         setSubscribers(data || []);
       }
-    } catch (_) {}
-    setLoading(false);
-    setSearch('');
+      setSearch('');
+    } catch (error) {
+      setFetchError(error.message || 'Unable to load records. Please retry.');
+    } finally {
+      setLoading(false);
+    }
   }, [activeTab]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
   const updateBookingStatus = async (id, status) => {
-    await supabase.from('booking_inquiries').update({ status }).eq('id', id);
-    fetchData();
+    setActionError('');
+    try {
+      const { error } = await supabase.from('booking_inquiries').update({ status }).eq('id', id);
+      if (error) throw error;
+      await fetchData();
+    } catch (error) {
+      setActionError(error.message || 'Unable to update the booking. Please retry.');
+    }
+  };
+
+  const handleLogout = async () => {
+    setLogoutError('');
+    try {
+      await onLogout();
+    } catch (error) {
+      setLogoutError(error.message || 'Unable to sign out. Please try again.');
+    }
   };
 
   const counts = { bookings: bookings.length, messages: messages.length, newsletter: subscribers.length };
@@ -97,14 +127,20 @@ export default function AdminDashboard({ onLogout }) {
           <span className="hidden sm:inline">Admin</span> Dashboard
         </h1>
         <div className="flex items-center gap-2">
-          <button onClick={fetchData} className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-gray-100 active:scale-95 transition-all cursor-pointer border-none">
+          <button onClick={fetchData} aria-label="Refresh records" disabled={loading} className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-gray-100 active:scale-95 transition-all cursor-pointer border-none disabled:cursor-not-allowed disabled:opacity-50">
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
           </button>
-          <button onClick={onLogout} className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-600 active:scale-95 transition-all cursor-pointer border-none">
+          <button onClick={handleLogout} aria-label="Sign out" className="w-9 h-9 rounded-xl bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-600 active:scale-95 transition-all cursor-pointer border-none">
             <LogOut size={16} />
           </button>
         </div>
       </header>
+
+      {logoutError && (
+        <p role="alert" className="mx-4 mt-4 rounded-xl bg-red-50 p-3 text-center text-sm text-red-700 sm:mx-6">
+          {logoutError}
+        </p>
+      )}
 
       <div className="px-4 sm:px-6 pt-4 pb-2 grid grid-cols-3 gap-2 sm:gap-3">
         {TABS.map((tab) => (
@@ -124,8 +160,25 @@ export default function AdminDashboard({ onLogout }) {
           </div>
         )}
 
+        {actionError && (
+          <p role="alert" className="mb-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">
+            {actionError}
+          </p>
+        )}
+
         {loading ? (
           <div className="flex items-center justify-center py-20"><Loader2 size={28} className="animate-spin text-primary-400" /></div>
+        ) : fetchError ? (
+          <div className="rounded-2xl border border-red-100 bg-white p-6 text-center">
+            <p role="alert" className="text-sm text-red-700">{fetchError}</p>
+            <button
+              type="button"
+              onClick={fetchData}
+              className="mt-4 rounded-xl bg-primary-700 px-4 py-2 text-sm font-medium text-white hover:bg-primary-800"
+            >
+              Retry
+            </button>
+          </div>
         ) : (
           <>
             {activeTab === 'bookings' && (

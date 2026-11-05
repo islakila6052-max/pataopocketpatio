@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GALLERY_IMAGES } from '../../constants/gallery';
+import ImageWithFallback from '../ui/ImageWithFallback';
 
 const samplePlants = [GALLERY_IMAGES[0], GALLERY_IMAGES[8], GALLERY_IMAGES[25]];
 
@@ -24,7 +25,7 @@ export default function CardStack() {
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="aspect-[4/3] overflow-hidden">
-            <img src={plant.images[0]} alt={plant.name}
+            <ImageWithFallback src={plant.images[0]} alt={plant.name}
               className="w-full h-full object-cover" />
           </div>
           <div className="p-3 sm:p-4">

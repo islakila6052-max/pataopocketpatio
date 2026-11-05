@@ -24,6 +24,10 @@ npm-debug.log*
 # Vite
 .vite/
 
+# Playwright
+test-results/
+playwright-report/
+
 # Supabase CLI cache
 supabase/.temp/
 

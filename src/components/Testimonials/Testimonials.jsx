@@ -7,7 +7,6 @@ const AUTO_SLIDE_MS = 4000;
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef(null);
   const total = TESTIMONIALS.length;
 
@@ -29,7 +28,6 @@ export default function Testimonials() {
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
 
   useEffect(() => {
-    if (isPaused) return;
     const timer = setInterval(() => {
       setCurrent((prev) => {
         const nextIdx = (prev + 1) % total;
@@ -38,7 +36,7 @@ export default function Testimonials() {
       });
     }, AUTO_SLIDE_MS);
     return () => clearInterval(timer);
-  }, [isPaused, total, scrollToSlide]);
+  }, [total, scrollToSlide]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -67,8 +65,6 @@ export default function Testimonials() {
         <div
           ref={containerRef}
           className="flex gap-3 sm:gap-4 overflow-x-auto pb-8 pt-2 snap-x snap-mandatory hide-scrollbar"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
         >
           {TESTIMONIALS.map((item, index) => (
             <div
@@ -95,7 +91,7 @@ export default function Testimonials() {
         </div>
 
         <div className="flex items-center justify-center gap-3 mt-4">
-          <button onClick={prev} className="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200 ease-apple cursor-pointer shadow-sm">
+          <button onClick={prev} aria-label="Previous guest story" className="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200 ease-apple cursor-pointer shadow-sm">
             <ChevronLeft size={16} strokeWidth={2} />
           </button>
           <div className="flex gap-1.5">
@@ -106,7 +102,7 @@ export default function Testimonials() {
               />
             ))}
           </div>
-          <button onClick={next} className="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200 ease-apple cursor-pointer shadow-sm">
+          <button onClick={next} aria-label="Next guest story" className="w-8 h-8 rounded-full bg-white border border-black/10 flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200 ease-apple cursor-pointer shadow-sm">
             <ChevronRight size={16} strokeWidth={2} />
           </button>
         </div>

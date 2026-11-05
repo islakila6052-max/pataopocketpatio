@@ -5,11 +5,11 @@ export default function LoadingScreen({ onFinish }) {
   const [phase, setPhase] = useState('enter');
 
   useEffect(() => {
-    const enterTimer = setTimeout(() => setPhase('exit'), 1500);
+    const enterTimer = setTimeout(() => setPhase('exit'), 400);
     const exitTimer = setTimeout(() => {
       setPhase('gone');
       onFinish?.();
-    }, 2200);
+    }, 700);
     return () => {
       clearTimeout(enterTimer);
       clearTimeout(exitTimer);
@@ -20,7 +20,10 @@ export default function LoadingScreen({ onFinish }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-gradient-to-b from-primary-900 via-primary-800 to-primary-950 transition-opacity duration-700 ${
+      role="status"
+      aria-label="Loading Patao Pocket Patio"
+      aria-hidden={phase === 'exit'}
+      className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-gradient-to-b from-primary-900 via-primary-800 to-primary-950 transition-opacity duration-300 ${
         phase === 'exit' ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
@@ -36,8 +39,8 @@ export default function LoadingScreen({ onFinish }) {
       <p className="text-white/40 text-sm font-light">
         Botanical Garden &amp; Plant Shop
       </p>
-      <div className="mt-8 w-48 h-1 rounded-full bg-white/10 overflow-hidden">
-        <div className="h-full w-full bg-primary-400 rounded-full animate-[loadingBar_1.5s_ease-in-out]" />
+      <div data-testid="loading-track" className="mt-8 w-48 h-1 rounded-full bg-white/10 overflow-hidden">
+        <div data-testid="loading-indicator" className="h-full w-1/3 bg-primary-400 rounded-full animate-[loadingBar_1s_ease-in-out_infinite]" />
       </div>
     </div>
   );

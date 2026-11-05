@@ -2,8 +2,10 @@ import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { X, ShoppingBag, ChevronLeft, ChevronRight, Search, SlidersHorizontal, PawPrint } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_IMAGES, GALLERY_FILTERS } from '../constants/gallery';
+import SEO from '../components/SEO';
 import SectionTitle from '../components/ui/SectionTitle';
 import Modal from '../components/ui/Modal';
+import ImageWithFallback from '../components/ui/ImageWithFallback';
 import { cn } from '../utils/helpers';
 
 const INITIAL_GALLERY_BATCH_SIZE = 10;
@@ -35,7 +37,7 @@ function LazyImage({ src, alt, imageId, onReady, eager }) {
   }, [imageId, onReady, src]);
   return (
     <div className="relative w-full h-full bg-primary-50/30">
-      <img ref={imgRef} src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async"
+      <ImageWithFallback ref={imgRef} src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async"
         className="w-full h-full object-cover object-center" />
     </div>
   );
@@ -118,6 +120,12 @@ export default function GalleryPage() {
   };
 
   return (
+    <>
+    <SEO
+      title="Plant Gallery — Patao Pocket Patio & PS"
+      description="Browse tropical plants and filter the Patao Pocket Patio & PS gallery by category, care level, and light needs."
+      path="/gallery"
+    />
     <section className="container section-padding">
       <div className="mx-auto mb-10 max-w-2xl text-center">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-600">Find your next plant</p>
@@ -294,9 +302,13 @@ export default function GalleryPage() {
         )}
       </AnimatePresence>
 
-      <Modal open={!!lightbox} onClose={closeLightbox}>
+      <Modal
+        open={!!lightbox}
+        onClose={closeLightbox}
+        label={lightbox ? `${lightbox.plant.name} photo viewer` : 'Plant photo viewer'}
+      >
         <div className="lightbox-overlay flex-col gap-4" onClick={closeLightbox}>
-          <button onClick={closeLightbox}
+          <button onClick={closeLightbox} aria-label="Close photo viewer"
             className="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white text-3xl transition-colors duration-200 cursor-pointer bg-transparent border-none z-20">
             <X size={32} strokeWidth={1.5} />
           </button>
@@ -307,11 +319,11 @@ export default function GalleryPage() {
                 onClick={e => e.stopPropagation()} />
               {lightbox.plant.images.length > 1 && (
                 <>
-                  <button onClick={e => { e.stopPropagation(); prevSlide(); }}
+                  <button onClick={e => { e.stopPropagation(); prevSlide(); }} aria-label="Previous plant photo"
                     className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors flex items-center justify-center cursor-pointer border-none z-20">
                     <ChevronLeft size={24} strokeWidth={1.5} />
                   </button>
-                  <button onClick={e => { e.stopPropagation(); nextSlide(); }}
+                  <button onClick={e => { e.stopPropagation(); nextSlide(); }} aria-label="Next plant photo"
                     className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors flex items-center justify-center cursor-pointer border-none z-20">
                     <ChevronRight size={24} strokeWidth={1.5} />
                   </button>
@@ -321,7 +333,7 @@ export default function GalleryPage() {
                 {lightbox.plant.images.length > 1 && (
                   <div className="flex gap-1.5">
                     {lightbox.plant.images.map((_, i) => (
-                      <button key={i} onClick={() => setLightbox(prev => ({ ...prev, index: i }))}
+                      <button key={i} onClick={() => setLightbox(prev => ({ ...prev, index: i }))} aria-label={`Show plant photo ${i + 1}`}
                         className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer border-none ${i === lightbox.index ? 'bg-white w-5' : 'bg-white/30 hover:bg-white/50'}`} />
                     ))}
                   </div>
@@ -333,5 +345,6 @@ export default function GalleryPage() {
         </div>
       </Modal>
     </section>
+    </>
   );
 }

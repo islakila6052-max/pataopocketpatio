@@ -7,7 +7,7 @@ import Footer from '../components/layout/Footer';
 import Navbar from '../components/layout/Navbar';
 import BookingModal from '../components/Booking/BookingModal';
 
-export default function MainLayout() {
+export default function MainLayout({ isLoading }) {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function MainLayout() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <ScrollProgress />
+      {!isLoading && <ScrollProgress />}
       <Navbar />
       <main className="overflow-x-hidden">
         <Outlet />

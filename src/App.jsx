@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { MotionConfig } from 'framer-motion';
 import { ToastProvider } from './context/ToastContext';
 import { BookingProvider } from './context/BookingContext';
 import LoadingScreen from './components/LoadingScreen';
@@ -13,24 +14,23 @@ import NotFound from './pages/NotFound';
 export default function App() {
   const [loading, setLoading] = useState(true);
 
-  if (loading) {
-    return <LoadingScreen onFinish={() => setLoading(false)} />;
-  }
-
   return (
     <HelmetProvider>
       <ToastProvider>
         <BookingProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route element={<MainLayout />}>
-                <Route index element={<Home />} />
-                <Route path="gallery" element={<GalleryPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-              <Route path="/admin" element={<Admin />} />
-            </Routes>
-          </BrowserRouter>
+          <MotionConfig reducedMotion="user">
+            <BrowserRouter>
+              <Routes>
+                <Route element={<MainLayout isLoading={loading} />}>
+                  <Route index element={<Home />} />
+                  <Route path="gallery" element={<GalleryPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Route>
+                <Route path="/admin" element={<Admin />} />
+              </Routes>
+              {loading && <LoadingScreen onFinish={() => setLoading(false)} />}
+            </BrowserRouter>
+          </MotionConfig>
         </BookingProvider>
       </ToastProvider>
     </HelmetProvider>

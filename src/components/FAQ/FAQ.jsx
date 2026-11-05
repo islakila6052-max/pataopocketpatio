@@ -17,9 +17,11 @@ export default function FAQ() {
           return (
             <div key={item.id} className="border-b border-black/5 last:border-b-0">
               <button
+                type="button"
                 onClick={() => toggle(item.id)}
                 className="w-full flex items-center justify-between py-4 text-left cursor-pointer bg-transparent border-none group"
                 aria-expanded={isOpen}
+                aria-controls={`faq-answer-${item.id}`}
               >
                 <span className="text-sm sm:text-base font-semibold text-primary-900 group-hover:text-primary-700 transition-colors duration-200">
                   {item.question}
@@ -28,7 +30,8 @@ export default function FAQ() {
                   {isOpen ? <Minus size={16} strokeWidth={2} /> : <Plus size={16} strokeWidth={2} />}
                 </span>
               </button>
-              <div className={cn('overflow-hidden transition-all duration-300 ease-apple', isOpen ? 'max-h-40 pb-4' : 'max-h-0')}>
+              <div id={`faq-answer-${item.id}`} aria-hidden={!isOpen}
+                className={cn('overflow-hidden transition-all duration-300 ease-apple', isOpen ? 'max-h-40 pb-4' : 'max-h-0')}>
                 <p className="text-sm text-primary-700/60 leading-relaxed">{item.answer}</p>
               </div>
             </div>

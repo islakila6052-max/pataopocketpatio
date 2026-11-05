@@ -1,5 +1,5 @@
 const bonsaiPhotos = Object.values(
-  import.meta.glob('../assets/bonsphoto/bonsphoto/*.{jpg,jpeg,png}', {
+  import.meta.glob('../assets/bonsphoto/bonsphoto/*.webp', {
     eager: true,
     import: 'default',
   })

@@ -2,6 +2,7 @@ import { EXPERIENCES } from '../../constants/experiences';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import SectionTitle from '../ui/SectionTitle';
 import Marquee from '../ui/Marquee';
+import ImageWithFallback from '../ui/ImageWithFallback';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { fadeInUp, staggerChildren } from '../../utils/animations';
@@ -42,7 +43,7 @@ export default function Experiences() {
               className="group w-[82vw] max-w-[330px] flex-shrink-0 snap-start overflow-hidden rounded-2xl border border-primary-900/10 bg-white shadow-card transition-all duration-300 ease-apple hover:-translate-y-1.5 hover:shadow-card-hover sm:w-auto sm:max-w-none"
             >
               <div className="relative h-40 overflow-hidden sm:h-48">
-                <img
+                <ImageWithFallback
                   src={exp.image}
                   alt={exp.title}
                   loading="lazy"

@@ -11,6 +11,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -37,6 +38,51 @@
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  :focus-visible {
+    outline: 3px solid #668B4F;
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.marquee-track {
+  animation: marquee 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation-duration: 30s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+.photo-crossfade {
+  transition: opacity 650ms ease-in-out;
+}
+
+.hero-background-crossfade {
+  transition: opacity 1600ms ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-crossfade {
+    transition-duration: 650ms !important;
+  }
+
+  .hero-background-crossfade {
+    transition-duration: 1600ms !important;
   }
 }
 

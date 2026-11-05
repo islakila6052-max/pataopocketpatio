@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingBag, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { GALLERY_IMAGES } from '../constants/gallery';
+import ImageWithFallback from './ui/ImageWithFallback';
 import SectionTitle from './ui/SectionTitle';
 import Button from './ui/Button';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -96,6 +97,26 @@ export default function GalleryPreview() {
     container.scrollBy({ left: dir * 280, behavior: 'smooth' });
   };
 
+  const handlePreviewScroll = () => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const center = container.scrollLeft + container.clientWidth / 2;
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    Array.from(container.children).forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(center - cardCenter);
+      if (distance < closestDistance) {
+        closestIndex = index;
+        closestDistance = distance;
+      }
+    });
+
+    setCurrent((previous) => previous === closestIndex ? previous : closestIndex);
+  };
+
   return (
     <section ref={sectionRef} className="bg-white section-padding">
       <div className="container">
@@ -124,7 +145,7 @@ export default function GalleryPreview() {
                 <Link to="/gallery"
                   className="block bg-[#fbfaf6] rounded-2xl border border-primary-900/[0.07] overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(29,55,41,0.12)]">
                   <div className="aspect-[3/4] overflow-hidden relative">
-                    <img src={plant.images[0]} alt={plant.name} loading="lazy"
+                    <ImageWithFallback src={plant.images[0]} alt={plant.name} loading="lazy" decoding="async"
                       className="w-full h-full object-cover object-center transition-transform duration-600 ease-apple hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-400 ease-apple flex items-end p-3">
                       <div className="flex items-center gap-1.5 text-white text-xs font-medium">
@@ -162,14 +183,15 @@ export default function GalleryPreview() {
             </button>
             <div ref={scrollRef}
               className="flex gap-3 overflow-x-auto pb-6 snap-x snap-mandatory hide-scrollbar px-1"
+              onScroll={handlePreviewScroll}
               onTouchStart={() => setPause(true)}
               onTouchEnd={() => setTimeout(() => setPause(false), 2000)}>
-              {previewPlants.map((plant) => (
+              {previewPlants.map((plant, index) => (
                 <Link to="/gallery" key={plant.id}
                   className="w-[65vw] max-w-[240px] flex-shrink-0 snap-center group bg-[#fbfaf6] rounded-2xl border border-primary-900/[0.07] overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                   <div className="aspect-[3/4] overflow-hidden">
-                    <img src={plant.images[0]} alt={plant.name} loading="lazy"
-                      className="w-full h-full object-cover object-center transition-transform duration-500 ease-apple group-hover:scale-105" />
+                    <ImageWithFallback src={plant.images[0]} alt={plant.name} loading="lazy" decoding="async"
+                      className={`photo-crossfade h-full w-full object-cover object-center ${current === index ? 'opacity-100' : 'opacity-80'}`} />
                   </div>
                   <div className="p-2.5">
                     <h3 className="text-[13px] font-semibold text-neutral-900 tracking-tight truncate">{plant.name}</h3>
@@ -186,8 +208,13 @@ export default function GalleryPreview() {
           <div className="flex justify-center gap-1.5 mt-3">
             {previewPlants.map((_, i) => (
               <button key={i}
+                aria-label={`Show plant ${i + 1}`}
                 onClick={() => {
-                  const c = scrollRef.current; if (c && c.children[i]) c.scrollTo({ left: c.children[i].offsetLeft - 12, behavior: 'smooth' });
+                  const c = scrollRef.current;
+                  if (c && c.children[i]) {
+                    setCurrent(i);
+                    c.scrollTo({ left: c.children[i].offsetLeft - 12, behavior: 'smooth' });
+                  }
                 }}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer border-none ${i === current ? 'bg-primary-600 w-4' : 'w-1.5 bg-neutral-300'}`} />
             ))}

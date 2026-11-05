@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GALLERY_IMAGES, GALLERY_FILTERS } from '../../constants/gallery';
 import SectionTitle from '../ui/SectionTitle';
 import Modal from '../ui/Modal';
+import ImageWithFallback from '../ui/ImageWithFallback';
 import { cn } from '../../utils/helpers';
 
 const cardVariants = {
@@ -43,7 +44,7 @@ function LazyImage({ src, alt }) {
           <div className="w-8 h-8 rounded-full border-2 border-primary-200 border-t-primary-500 animate-spin" />
         </div>
       )}
-      <img ref={imgRef} src={src} alt={alt} loading="lazy" decoding="async"
+      <ImageWithFallback ref={imgRef} src={src} alt={alt} loading="lazy" decoding="async"
         className={cn('w-full h-full object-cover object-center transition-all duration-500 ease-apple', loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95')} />
     </div>
   );
@@ -153,10 +154,14 @@ export default function Gallery() {
       </AnimatePresence>
 
       {/* Lightbox with swipe */}
-      <Modal open={!!lightbox} onClose={closeLightbox}>
+      <Modal
+        open={!!lightbox}
+        onClose={closeLightbox}
+        label={lightbox ? `${lightbox.plant.name} photo viewer` : 'Plant photo viewer'}
+      >
         <div className="lightbox-overlay flex-col gap-4" onClick={closeLightbox}>
           {/* Close button */}
-          <button onClick={closeLightbox}
+          <button onClick={closeLightbox} aria-label="Close photo viewer"
             className="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white text-3xl transition-colors duration-200 cursor-pointer bg-transparent border-none z-20">
             <X size={32} strokeWidth={1.5} />
           </button>
@@ -171,11 +176,11 @@ export default function Gallery() {
               {/* Arrows */}
               {lightbox.plant.images.length > 1 && (
                 <>
-                  <button onClick={e => { e.stopPropagation(); prevSlide(); }}
+                  <button onClick={e => { e.stopPropagation(); prevSlide(); }} aria-label="Previous plant photo"
                     className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors flex items-center justify-center cursor-pointer border-none z-20">
                     <ChevronLeft size={24} strokeWidth={1.5} />
                   </button>
-                  <button onClick={e => { e.stopPropagation(); nextSlide(); }}
+                  <button onClick={e => { e.stopPropagation(); nextSlide(); }} aria-label="Next plant photo"
                     className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-colors flex items-center justify-center cursor-pointer border-none z-20">
                     <ChevronRight size={24} strokeWidth={1.5} />
                   </button>
@@ -187,7 +192,7 @@ export default function Gallery() {
                 {lightbox.plant.images.length > 1 && (
                   <div className="flex gap-1.5">
                     {lightbox.plant.images.map((_, i) => (
-                      <button key={i} onClick={() => setLightbox(prev => ({ ...prev, index: i }))}
+                      <button key={i} onClick={() => setLightbox(prev => ({ ...prev, index: i }))} aria-label={`Show plant photo ${i + 1}`}
                         className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer border-none ${i === lightbox.index ? 'bg-white w-5' : 'bg-white/30 hover:bg-white/50'}`} />
                     ))}
                   </div>

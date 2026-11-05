@@ -2,35 +2,31 @@ import { supabase } from '../lib/supabase';
 
 /**
  * Submit a contact form message to Supabase.
- * @returns {{ data, error }}
+ * @returns {{ error }}
  */
 export async function submitContactMessage({ name, email, message }) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('contact_messages')
-    .insert([{ name, email, message }])
-    .select()
-    .single();
+    .insert([{ name, email, message }]);
 
-  return { data, error };
+  return { error };
 }
 
 /**
  * Subscribe an email to the newsletter.
- * @returns {{ data, error }}
+ * @returns {{ error }}
  */
 export async function subscribeToNewsletter(email) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('newsletter_subscribers')
-    .insert([{ email }])
-    .select()
-    .single();
+    .insert([{ email }]);
 
-  return { data, error };
+  return { error };
 }
 
 /**
  * Submit a booking inquiry.
- * @returns {{ data, error }}
+ * @returns {{ error }}
  */
 export async function submitBookingInquiry({
   fullName,
@@ -40,20 +36,18 @@ export async function submitBookingInquiry({
   guests,
   notes,
 }) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('booking_inquiries')
     .insert([
       {
         full_name: fullName,
         email,
         phone,
-        preferred_date: preferredDate,
+        preferred_date: preferredDate || null,
         guests,
         notes,
       },
-    ])
-    .select()
-    .single();
+    ]);
 
-  return { data, error };
+  return { error };
 }

@@ -18,14 +18,21 @@ export default function Contact() {
     e.preventDefault();
     setStatus('loading');
     setErrorMsg('');
-    const { error } = await submitContactMessage(form);
-    if (error) {
+
+    try {
+      const { error } = await submitContactMessage(form);
+      if (error) {
+        setStatus('error');
+        setErrorMsg('Something went wrong. Please try again.');
+        return;
+      }
+
+      setStatus('success');
+      setForm({ name: '', email: '', message: '' });
+    } catch {
       setStatus('error');
-      setErrorMsg('Something went wrong. Please try again.');
-      return;
+      setErrorMsg('Unable to send your message right now. Please try again.');
     }
-    setStatus('success');
-    setForm({ name: '', email: '', message: '' });
   };
 
   return (
@@ -68,7 +75,7 @@ export default function Contact() {
         <div>
           <h3 className="text-xl font-semibold text-primary-900 mb-5 tracking-tight">Send a Message</h3>
           {status === 'success' ? (
-            <div className="bg-primary-50 border border-primary-100 rounded-xl p-6 sm:p-8 text-center animate-[fadeIn_0.4s_ease-out]">
+            <div role="status" className="bg-primary-50 border border-primary-100 rounded-xl p-6 sm:p-8 text-center animate-[fadeIn_0.4s_ease-out]">
               <div className="w-12 h-12 rounded-full bg-primary-200 flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-primary-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -80,10 +87,13 @@ export default function Contact() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
-              <Input name="name" type="text" placeholder="Your Name" value={form.name} onChange={handleChange} required />
-              <Input name="email" type="email" placeholder="Your Email" value={form.email} onChange={handleChange} required />
-              <Textarea name="message" rows={4} placeholder="Your Message" value={form.message} onChange={handleChange} required />
-              {status === 'error' && <p className="text-red-500 text-xs font-medium">{errorMsg}</p>}
+              <label htmlFor="contact-name" className="sr-only">Your name</label>
+              <Input id="contact-name" name="name" type="text" placeholder="Your Name" value={form.name} onChange={handleChange} required />
+              <label htmlFor="contact-email" className="sr-only">Your email</label>
+              <Input id="contact-email" name="email" type="email" placeholder="Your Email" value={form.email} onChange={handleChange} required />
+              <label htmlFor="contact-message" className="sr-only">Your message</label>
+              <Textarea id="contact-message" name="message" rows={4} placeholder="Your Message" value={form.message} onChange={handleChange} required />
+              {status === 'error' && <p role="alert" className="text-red-500 text-xs font-medium">{errorMsg}</p>}
               <Button type="submit" disabled={status === 'loading'} className="w-full sm:w-auto inline-flex items-center gap-2">
                 {status === 'loading' && <Loader2 size={16} className="animate-spin" />}
                 {status === 'loading' ? 'Sending...' : 'Send Message'}

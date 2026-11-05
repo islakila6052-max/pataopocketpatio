@@ -3,9 +3,10 @@ import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { FEATURES } from '../../constants/events';
 import SectionTitle from '../ui/SectionTitle';
 import BlurReveal from '../ui/BlurReveal';
+import ImageWithFallback from '../ui/ImageWithFallback';
 import { cn } from '../../utils/helpers';
-import aboutImage from '../../assets/images/bon.jpg';
-import gardenImage from '../../assets/bonsphoto/bonsphoto/thegarden.jpg';
+import aboutImage from '../../assets/images/bon.webp';
+import gardenImage from '../../assets/bonsphoto/bonsphoto/thegarden.webp';
 
 const aboutImages = [aboutImage, gardenImage];
 
@@ -28,14 +29,15 @@ export default function About() {
         <BlurReveal className="w-full">
           <div className="relative overflow-hidden rounded-xl shadow-[0_4px_24px_rgba(27,94,32,0.10)] h-[240px] sm:h-[320px] lg:h-[480px] w-full">
             {aboutImages.map((image, index) => (
-              <img
+              <ImageWithFallback
                 key={image}
                 src={image}
                 alt={index === activeImage ? 'Patao Pocket Patio & PS' : ''}
                 aria-hidden={index !== activeImage}
-                loading={index === 0 ? 'lazy' : 'eager'}
+                loading="lazy"
+                decoding="async"
                 className={cn(
-                  'absolute inset-0 h-full w-full object-cover transition-opacity duration-700',
+                  'photo-crossfade absolute inset-0 h-full w-full object-cover',
                   index === activeImage ? 'opacity-100' : 'opacity-0'
                 )}
               />
@@ -66,13 +68,24 @@ export default function About() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-8">
             {FEATURES.map((feature, i) => (
               <BlurReveal key={feature.id} delay={i * 100}>
-                <div className="group bg-white p-5 rounded-xl border border-black/5 shadow-card transition-all duration-300 ease-apple hover:-translate-y-1.5 hover:shadow-card-hover">
-                  <div className="w-9 h-9 rounded-lg bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-colors duration-200">
-                    <feature.icon size={20} className="text-primary-600" strokeWidth={1.8} />
+                <article className="group relative isolate flex min-h-44 h-full flex-col justify-end overflow-hidden rounded-xl border border-white/10 shadow-card transition-transform duration-300 ease-apple hover:-translate-y-1.5 hover:shadow-card-hover">
+                  <img
+                    src={feature.image}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#10251d]/95 via-[#10251d]/45 to-[#10251d]/5" />
+                  <div className="relative z-10 p-4 sm:p-5">
+                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg border border-white/20 bg-black/20 text-white backdrop-blur-sm">
+                      <feature.icon size={19} strokeWidth={1.8} />
+                    </div>
+                    <h4 className="mb-1 text-sm font-semibold text-white">{feature.title}</h4>
+                    <p className="text-xs leading-relaxed text-white/80">{feature.description}</p>
                   </div>
-                  <h4 className="text-primary-900 font-semibold text-sm mb-1">{feature.title}</h4>
-                  <p className="text-primary-700/50 text-xs leading-relaxed">{feature.description}</p>
-                </div>
+                </article>
               </BlurReveal>
             ))}
           </div>

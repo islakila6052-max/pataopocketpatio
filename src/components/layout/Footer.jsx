@@ -23,15 +23,22 @@ export default function Footer() {
     if (!email) return;
     setStatus('loading');
     setMessage('');
-    const { error } = await subscribeToNewsletter(email);
-    if (error) {
-      setMessage(error.code === '23505' ? 'You are already subscribed!' : 'Something went wrong. Try again.');
+
+    try {
+      const { error } = await subscribeToNewsletter(email);
+      if (error) {
+        setMessage(error.code === '23505' ? 'You are already subscribed!' : 'Something went wrong. Try again.');
+        setStatus('error');
+        return;
+      }
+
+      setStatus('success');
+      setMessage('Welcome to the sanctuary!');
+      setEmail('');
+    } catch {
+      setMessage('Unable to subscribe right now. Please try again.');
       setStatus('error');
-      return;
     }
-    setStatus('success');
-    setMessage('Welcome to the sanctuary!');
-    setEmail('');
   };
 
   return (
@@ -103,7 +110,7 @@ export default function Footer() {
               </Button>
             </form>
             {message && (
-              <p role="status" className={`mt-3 text-sm ${status === 'success' ? 'text-primary-300' : 'text-red-300'}`}>
+              <p role={status === 'error' ? 'alert' : 'status'} className={`mt-3 text-sm ${status === 'success' ? 'text-primary-300' : 'text-red-300'}`}>
                 {message}
               </p>
             )}
